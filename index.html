@@ -1,107 +1,180 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IPTV WAEL</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IPTV WAEL</title>
 
-  <style>
-    body{margin:0;font-family:Tahoma,Arial;background:#0f172a;color:#fff}
-    header{padding:20px;text-align:center;font-size:28px;font-weight:bold}
-    .container{max-width:1000px;margin:auto;padding:15px}
-    .section{margin:22px 0;background:#111827;border-radius:18px;
-      border:1px solid #22c55e;box-shadow:0 0 18px rgba(34,197,94,.25)}
-    .section h2{margin:0;padding:14px 18px;border-bottom:1px solid #1f2937}
-    .channel{padding:14px 18px;display:flex;justify-content:space-between;
-      align-items:center;border-top:1px solid #1f2937}
-    .btn{background:#22c55e;color:#022c22;border:0;padding:9px 14px;
-      border-radius:10px;cursor:pointer;font-weight:600}
-    .btn:disabled{opacity:.5;cursor:not-allowed}
-    .player-box{margin-top:16px;padding:12px}
-    iframe,video{width:100%;height:440px;border-radius:14px;border:0;background:#000}
-    .note{text-align:center;color:#9ca3af;font-size:13px;margin-top:6px}
-    .code-box{padding:14px 18px;display:flex;gap:10px}
-    input{padding:9px 10px;border-radius:10px;border:0;flex:1}
-  </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#030712;color:#fff;font-family:'Cairo',sans-serif}
+  header{padding:18px 12px;text-align:center;background:#0f172a;
+    font-size:26px;font-weight:700;box-shadow:0 8px 25px #0008}
+  .container{max-width:1250px;margin:auto;padding:12px}
+  .player{background:#020617;border-radius:20px;padding:12px;
+    box-shadow:0 0 25px rgba(34,197,94,.15);border:1px solid #22c55e33}
+  video{width:100%;max-height:500px;border-radius:16px;background:#000}
+  .note{text-align:center;color:#a1a1aa;font-size:12px;margin-top:4px}
+
+  .section{margin-top:22px}
+  .section h2{margin:4px 0 12px;font-size:20px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+
+  .card{background:#0e162c;border-radius:18px;padding:10px;cursor:pointer;
+    border:1px solid #1f2937;transition:.2s}
+  .card:hover{border-color:#22c55e;box-shadow:0 0 14px rgba(34,197,94,.25)}
+  .thumb{height:85px;border-radius:12px;background:#000 url('https://via.placeholder.com/300x200/0b1220/ffffff?text=LIVE')
+    center/cover no-repeat}
+  .title{margin-top:6px;font-size:13px}
+  .badge{display:inline-block;margin-top:4px;font-size:10px;
+    background:#22c55e22;color:#22c55e;border:1px solid #22c55e66;border-radius:10px;padding:2px 7px}
+
+  /* PREMIUM */
+  .locked{filter:grayscale(1);opacity:.6}
+
+  /* MODAL */
+  .overlay{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center}
+  .modal{background:#0f172a;border-radius:18px;padding:16px;width:92%;max-width:360px;
+    border:1px solid #22c55e44}
+  input{padding:10px;border-radius:10px;border:0;width:100%;margin-top:8px}
+  .row{display:flex;gap:10px;margin-top:10px}
+  .btn{flex:1;background:#22c55e;color:#022c22;border:0;border-radius:10px;padding:9px 12px;font-weight:700;cursor:pointer}
+  .btn.red{background:#ef4444;color:#fff}
+</style>
 </head>
 
 <body>
+
 <header>IPTV WAEL</header>
 
 <div class="container">
 
   <!-- PLAYER -->
-  <div class="section">
-    <h2>Live Player</h2>
-    <div class="player-box">
-      <iframe id="player" src="" allowfullscreen></iframe>
-      <div class="note">بدّل الرابط برابط بث قانوني فقط.</div>
-    </div>
+  <div class="player">
+    <video id="player" controls></video>
+    <div class="note">استعمل روابط قانونية فقط — هادو روابط تجريبية آمنة باش تشوف التشغيل.</div>
   </div>
 
   <!-- SPORT -->
   <div class="section">
     <h2>Sport</h2>
+    <div class="grid">
+      <div class="card" onclick="play('https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8')">
+        <div class="thumb"></div>
+        <div class="title">Sport Test 1</div>
+        <span class="badge">LIVE</span>
+      </div>
 
-    <div class="channel">
-      <span>Sport Live 1</span>
-      <button class="btn" onclick="play('https://example.com/sport1')">تشغيل</button>
-    </div>
-
-    <div class="channel">
-      <span>Sport Live 2</span>
-      <button class="btn" onclick="play('https://example.com/sport2')">تشغيل</button>
+      <div class="card" onclick="play('https://test-streams.mux.dev/test_001/stream.m3u8')">
+        <div class="thumb"></div>
+        <div class="title">Sport Test 2</div>
+        <span class="badge">LIVE</span>
+      </div>
     </div>
   </div>
 
   <!-- NEWS -->
   <div class="section">
     <h2>Akhbar</h2>
+    <div class="grid">
+      <div class="card" onclick="play('https://test-streams.mux.dev/dai-discontinuity-deltatre/manifest.m3u8')">
+        <div class="thumb"></div>
+        <div class="title">News Live</div>
+        <span class="badge">LIVE</span>
+      </div>
 
-    <div class="channel">
-      <span>News Live 1</span>
-      <button class="btn" onclick="play('https://example.com/news1')">تشغيل</button>
+      <div class="card" onclick="play('https://storage.googleapis.com/shaka-demo-assets/angel-one-hls/hls.m3u8')">
+        <div class="thumb"></div>
+        <div class="title">Info Channel</div>
+        <span class="badge">LIVE</span>
+      </div>
     </div>
+  </div>
 
-    <div class="channel">
-      <span>News Live 2</span>
-      <button class="btn" onclick="play('https://example.com/news2')">تشغيل</button>
+  <!-- KIDS -->
+  <div class="section">
+    <h2>Kids</h2>
+    <div class="grid">
+      <div class="card" onclick="play('https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8')">
+        <div class="thumb"></div>
+        <div class="title">Kids 1</div>
+        <span class="badge">LIVE</span>
+      </div>
     </div>
   </div>
 
   <!-- PREMIUM -->
   <div class="section">
-    <h2>Live Premium (محمّي بكود)</h2>
+    <h2>Premium</h2>
+    <div class="grid">
 
-    <div class="code-box">
-      <input id="code" type="password" placeholder="دخل الكود هنا" />
-      <button class="btn" onclick="unlock()">دخول</button>
+      <div id="premiumCard" class="card locked" onclick="premiumClick()">
+        <div class="thumb"></div>
+        <div class="title">Premium Live</div>
+        <span class="badge">PREMIUM</span>
+      </div>
+
     </div>
-
-    <div class="channel">
-      <span>Premium Live</span>
-      <button id="premiumBtn" class="btn" onclick="play('https://example.com/premium')" disabled>
-        تشغيل بريميوم
-      </button>
-    </div>
-
-    <div class="note">الكود الخاص: فقط للناس لي عندهم الصلاحية.</div>
+    <div class="note">الدخول بالبريميوم كود: خاص بالناس لي عندهم الصلاحية.</div>
   </div>
 
 </div>
 
+<!-- MODAL -->
+<div id="overlay" class="overlay">
+  <div class="modal">
+    <h3>دخول البريميوم</h3>
+    <input id="code" type="password" placeholder="دخل الكود">
+    <div class="row">
+      <button class="btn" onclick="checkCode()">تأكيد</button>
+      <button class="btn red" onclick="closeModal()">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- HLS -->
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
 <script>
+  const video = document.getElementById('player');
+  let premiumUnlocked = false;
+
   function play(url){
-    document.getElementById('player').src = url;
+    if(Hls.isSupported()){
+      const hls = new Hls();
+      hls.loadSource(url);
+      hls.attachMedia(video);
+    } else if(video.canPlayType('application/vnd.apple.mpegurl')){
+      video.src = url;
+    }
+    video.play();
   }
 
-  function unlock(){
-    const val = document.getElementById('code').value.trim();
-    if(val === "061008"){
-      document.getElementById('premiumBtn').disabled = false;
-      alert("تم فتح البث البريميوم ✔");
+  // PREMIUM
+  function premiumClick(){
+    if(premiumUnlocked){
+      play('https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'); // بدلو برابط البريميوم القانوني ديالك
     } else {
-      alert("الكود غير صحيح ❌");
+      openModal();
+    }
+  }
+
+  function openModal(){ document.getElementById('overlay').style.display='flex'; }
+  function closeModal(){ document.getElementById('overlay').style.display='none'; }
+
+  function checkCode(){
+    const v = document.getElementById('code').value.trim();
+    if(v === "061008"){
+      premiumUnlocked = true;
+      closeModal();
+      document.getElementById('premiumCard').classList.remove('locked');
+      alert("✔ تم فتح البريميوم");
+    } else {
+      alert("❌ الكود غير صحيح");
     }
   }
 </script>
