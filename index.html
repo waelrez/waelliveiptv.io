@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IPTV WAEL</title>
+
+  <style>
+    body{margin:0;font-family:Tahoma,Arial;background:#0f172a;color:#fff}
+    header{padding:20px;text-align:center;font-size:28px;font-weight:bold}
+    .container{max-width:1000px;margin:auto;padding:15px}
+    .section{margin:22px 0;background:#111827;border-radius:18px;
+      border:1px solid #22c55e;box-shadow:0 0 18px rgba(34,197,94,.25)}
+    .section h2{margin:0;padding:14px 18px;border-bottom:1px solid #1f2937}
+    .channel{padding:14px 18px;display:flex;justify-content:space-between;
+      align-items:center;border-top:1px solid #1f2937}
+    .btn{background:#22c55e;color:#022c22;border:0;padding:9px 14px;
+      border-radius:10px;cursor:pointer;font-weight:600}
+    .btn:disabled{opacity:.5;cursor:not-allowed}
+    .player-box{margin-top:16px;padding:12px}
+    iframe,video{width:100%;height:440px;border-radius:14px;border:0;background:#000}
+    .note{text-align:center;color:#9ca3af;font-size:13px;margin-top:6px}
+    .code-box{padding:14px 18px;display:flex;gap:10px}
+    input{padding:9px 10px;border-radius:10px;border:0;flex:1}
+  </style>
+</head>
+
+<body>
+<header>IPTV WAEL</header>
+
+<div class="container">
+
+  <!-- PLAYER -->
+  <div class="section">
+    <h2>Live Player</h2>
+    <div class="player-box">
+      <iframe id="player" src="" allowfullscreen></iframe>
+      <div class="note">بدّل الرابط برابط بث قانوني فقط.</div>
+    </div>
+  </div>
+
+  <!-- SPORT -->
+  <div class="section">
+    <h2>Sport</h2>
+
+    <div class="channel">
+      <span>Sport Live 1</span>
+      <button class="btn" onclick="play('https://example.com/sport1')">تشغيل</button>
+    </div>
+
+    <div class="channel">
+      <span>Sport Live 2</span>
+      <button class="btn" onclick="play('https://example.com/sport2')">تشغيل</button>
+    </div>
+  </div>
+
+  <!-- NEWS -->
+  <div class="section">
+    <h2>Akhbar</h2>
+
+    <div class="channel">
+      <span>News Live 1</span>
+      <button class="btn" onclick="play('https://example.com/news1')">تشغيل</button>
+    </div>
+
+    <div class="channel">
+      <span>News Live 2</span>
+      <button class="btn" onclick="play('https://example.com/news2')">تشغيل</button>
+    </div>
+  </div>
+
+  <!-- PREMIUM -->
+  <div class="section">
+    <h2>Live Premium (محمّي بكود)</h2>
+
+    <div class="code-box">
+      <input id="code" type="password" placeholder="دخل الكود هنا" />
+      <button class="btn" onclick="unlock()">دخول</button>
+    </div>
+
+    <div class="channel">
+      <span>Premium Live</span>
+      <button id="premiumBtn" class="btn" onclick="play('https://example.com/premium')" disabled>
+        تشغيل بريميوم
+      </button>
+    </div>
+
+    <div class="note">الكود الخاص: فقط للناس لي عندهم الصلاحية.</div>
+  </div>
+
+</div>
+
+<script>
+  function play(url){
+    document.getElementById('player').src = url;
+  }
+
+  function unlock(){
+    const val = document.getElementById('code').value.trim();
+    if(val === "061008"){
+      document.getElementById('premiumBtn').disabled = false;
+      alert("تم فتح البث البريميوم ✔");
+    } else {
+      alert("الكود غير صحيح ❌");
+    }
+  }
+</script>
+
+</body>
+</html>
