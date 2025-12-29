@@ -3,12 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IPTV WAEL</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<title>IPTV WAEL - YouTube Live</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
 <style>
   *{box-sizing:border-box;margin:0;padding:0;font-family:'Roboto',sans-serif;}
   body{background:#0c0f1b;color:#fff;}
@@ -17,23 +13,24 @@
   header img{height:40px;position:absolute;left:20px;top:50%;transform:translateY(-50%);}
   .container{max-width:1250px;margin:auto;padding:15px;}
   .player-box{background:#000;border-radius:16px;padding:10px;box-shadow:0 0 25px rgba(34,197,94,.15);}
-  video{width:100%;max-height:500px;border-radius:12px;background:#000;}
+  iframe{width:100%;height:500px;border:none;border-radius:12px;}
   .note{text-align:center;color:#aaa;font-size:13px;margin-top:5px;}
 
   .section{margin-top:25px;}
   .section h2{margin-bottom:15px;font-size:20px;display:flex;align-items:center;gap:10px;}
   .section h2 img{height:25px;}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:15px;}
-
   .card{background:#111827;border-radius:16px;overflow:hidden;cursor:pointer;
     transition:.3s;box-shadow:0 4px 12px rgba(0,0,0,0.2);}
   .card:hover{transform:translateY(-5px);box-shadow:0 8px 20px rgba(34,197,94,0.35);}
   .thumb{height:90px;background:#222 center/cover no-repeat;border-radius:12px;}
   .title{padding:10px;font-size:14px;font-weight:600;color:#fff;}
+  .locked{filter:grayscale(1);opacity:.6;}
+
+  /* BADGE */
   .badge{display:inline-block;margin-top:5px;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:700;}
   .badge.live{background:#22c55e;color:#fff;}
   .badge.premium{background:#f59e0b;color:#fff;}
-  .locked{filter:grayscale(1);opacity:.6;}
 
   /* MODAL */
   .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;}
@@ -45,7 +42,6 @@
   .btn.red{background:#ef4444;color:#fff;}
 </style>
 </head>
-
 <body>
 
 <header>
@@ -57,28 +53,22 @@
 
   <!-- PLAYER -->
   <div class="player-box">
-    <video id="player" controls></video>
-    <div class="note">Use only legal/authorized streams.</div>
+    <iframe id="player" src="https://www.youtube.com/embed/live_stream?channel=UC4R8DWoMoI7CAwX8_LjQHig" allowfullscreen></iframe>
+    <div class="note">Click a channel to play live from YouTube.</div>
   </div>
 
-  <!-- Sections with multiple channels -->
   <!-- Sport -->
   <div class="section">
     <h2><img src="https://img.icons8.com/color/48/000000/soccer-ball.png"/> Sport</h2>
     <div class="grid">
-      <div class="card" onclick="play('https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8')">
-        <div class="thumb"></div>
+      <div class="card" onclick="play('https://www.youtube.com/embed/live_stream?channel=UC4R8DWoMoI7CAwX8_LjQHig')">
+        <div class="thumb" style="background-image:url('https://img.icons8.com/color/96/000000/soccer-ball.png')"></div>
         <div class="title">Sport Live 1</div>
         <span class="badge live">LIVE</span>
       </div>
-      <div class="card" onclick="play('https://test-streams.mux.dev/test_001/stream.m3u8')">
-        <div class="thumb"></div>
+      <div class="card" onclick="play('https://www.youtube.com/embed/live_stream?channel=UCqG4L8o1BHzUu80t7xu5DZA')">
+        <div class="thumb" style="background-image:url('https://img.icons8.com/color/96/000000/basketball.png')"></div>
         <div class="title">Sport Live 2</div>
-        <span class="badge live">LIVE</span>
-      </div>
-      <div class="card" onclick="play('https://storage.googleapis.com/shaka-demo-assets/angel-one-hls/hls.m3u8')">
-        <div class="thumb"></div>
-        <div class="title">Sport Live 3</div>
         <span class="badge live">LIVE</span>
       </div>
     </div>
@@ -88,72 +78,14 @@
   <div class="section">
     <h2><img src="https://img.icons8.com/color/48/000000/news.png"/> News</h2>
     <div class="grid">
-      <div class="card" onclick="play('https://test-streams.mux.dev/dai-discontinuity-deltatre/manifest.m3u8')">
-        <div class="thumb"></div>
+      <div class="card" onclick="play('https://www.youtube.com/embed/live_stream?channel=UC16niRr50-MSBwiO3YDb3RA')">
+        <div class="thumb" style="background-image:url('https://img.icons8.com/color/96/000000/news.png')"></div>
         <div class="title">News Channel 1</div>
         <span class="badge live">LIVE</span>
       </div>
-      <div class="card" onclick="play('https://storage.googleapis.com/shaka-demo-assets/angel-one-hls/hls.m3u8')">
-        <div class="thumb"></div>
+      <div class="card" onclick="play('https://www.youtube.com/embed/live_stream?channel=UCXIJgqnII2ZOINSWNOGFThA')">
+        <div class="thumb" style="background-image:url('https://img.icons8.com/color/96/000000/news.png')"></div>
         <div class="title">News Channel 2</div>
-        <span class="badge live">LIVE</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Kids -->
-  <div class="section">
-    <h2><img src="https://img.icons8.com/color/48/000000/kids-room.png"/> Kids</h2>
-    <div class="grid">
-      <div class="card" onclick="play('https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8')">
-        <div class="thumb"></div>
-        <div class="title">Kids 1</div>
-        <span class="badge live">LIVE</span>
-      </div>
-      <div class="card" onclick="play('https://bitdash-a.akamaihd.net/content/MI201109210084_1/hls/playlist.m3u8')">
-        <div class="thumb"></div>
-        <div class="title">Kids 2</div>
-        <span class="badge live">LIVE</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Movies -->
-  <div class="section">
-    <h2><img src="https://img.icons8.com/color/48/000000/movie-projector.png"/> Movies</h2>
-    <div class="grid">
-      <div class="card" onclick="play('https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8')">
-        <div class="thumb"></div>
-        <div class="title">Movie 1</div>
-        <span class="badge live">LIVE</span>
-      </div>
-      <div class="card" onclick="play('https://test-streams.mux.dev/test_001/stream.m3u8')">
-        <div class="thumb"></div>
-        <div class="title">Movie 2</div>
-        <span class="badge live">LIVE</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Music -->
-  <div class="section">
-    <h2><img src="https://img.icons8.com/color/48/000000/musical-notes.png"/> Music</h2>
-    <div class="grid">
-      <div class="card" onclick="play('https://storage.googleapis.com/shaka-demo-assets/angel-one-hls/hls.m3u8')">
-        <div class="thumb"></div>
-        <div class="title">Music Channel 1</div>
-        <span class="badge live">LIVE</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Documentaries -->
-  <div class="section">
-    <h2><img src="https://img.icons8.com/color/48/000000/documentary.png"/> Documentaries</h2>
-    <div class="grid">
-      <div class="card" onclick="play('https://youtu.be/y3UyR0s_DrA?si=8A8eVPVvrlyoPRZB')">
-        <div class="thumb"></div>
-        <div class="title">Doc 1</div>
         <span class="badge live">LIVE</span>
       </div>
     </div>
@@ -163,13 +95,28 @@
   <div class="section">
     <h2><img src="https://img.icons8.com/color/48/000000/diamond.png"/> Premium</h2>
     <div class="grid">
-      <div id="premiumCard" class="card locked" onclick="premiumClick()">
-        <div class="thumb"></div>
-        <div class="title">Premium Live</div>
+      <div id="premium1" class="card locked" onclick="premiumClick(1)">
+        <div class="thumb" style="background-image:url('https://img.icons8.com/color/96/000000/diamond.png')"></div>
+        <div class="title">Premium Live 1</div>
+        <span class="badge premium">PREMIUM</span>
+      </div>
+      <div id="premium2" class="card locked" onclick="premiumClick(2)">
+        <div class="thumb" style="background-image:url('https://img.icons8.com/color/96/000000/diamond.png')"></div>
+        <div class="title">Premium Live 2</div>
+        <span class="badge premium">PREMIUM</span>
+      </div>
+      <div id="premium3" class="card locked" onclick="premiumClick(3)">
+        <div class="thumb" style="background-image:url('https://img.icons8.com/color/96/000000/diamond.png')"></div>
+        <div class="title">Premium Live 3</div>
+        <span class="badge premium">PREMIUM</span>
+      </div>
+      <div id="premium4" class="card locked" onclick="premiumClick(4)">
+        <div class="thumb" style="background-image:url('https://img.icons8.com/color/96/000000/diamond.png')"></div>
+        <div class="title">Premium Live 4</div>
         <span class="badge premium">PREMIUM</span>
       </div>
     </div>
-    <div class="note">Enter premium code to unlock.</div>
+    <div class="note">Enter premium code: 061008</div>
   </div>
 
 </div>
@@ -186,38 +133,45 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script>
-const video = document.getElementById('player');
+const player = document.getElementById('player');
 let premiumUnlocked = false;
+let selectedPremium = null;
 
 function play(url){
-  if(Hls.isSupported()){
-    const hls = new Hls();
-    hls.loadSource(url);
-    hls.attachMedia(video);
-  } else if(video.canPlayType('application/vnd.apple.mpegurl')){
-    video.src = url;
-  }
-  video.play();
+  player.src = url;
 }
 
-// PREMIUM
-function premiumClick(){
+// Premium
+function premiumClick(num){
+  selectedPremium = num;
   if(premiumUnlocked){
-    play('https://test-streams.mux.dev/test_001/stream.m3u8'); // replace with real premium
+    playPremium(num);
   } else {
     openModal();
   }
 }
+
+function playPremium(num){
+  let urls = {
+    1:'https://www.youtube.com/embed/live_stream?channel=UC4R8DWoMoI7CAwX8_LjQHig',
+    2:'https://www.youtube.com/embed/live_stream?channel=UCqG4L8o1BHzUu80t7xu5DZA',
+    3:'https://www.youtube.com/embed/live_stream?channel=UC16niRr50-MSBwiO3YDb3RA',
+    4:'https://www.youtube.com/embed/live_stream?channel=UCXIJgqnII2ZOINSWNOGFThA'
+  };
+  play(urls[num]);
+}
+
 function openModal(){ document.getElementById('overlay').style.display='flex'; }
 function closeModal(){ document.getElementById('overlay').style.display='none'; }
+
 function checkCode(){
   const v = document.getElementById('code').value.trim();
   if(v === "061008"){
     premiumUnlocked = true;
     closeModal();
-    document.getElementById('premiumCard').classList.remove('locked');
+    document.querySelectorAll('.locked').forEach(el=>el.classList.remove('locked'));
+    if(selectedPremium) playPremium(selectedPremium);
     alert("Premium access granted ✔");
   } else {
     alert("Incorrect code ❌");
