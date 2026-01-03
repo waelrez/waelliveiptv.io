@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IPTV WAEL — IBO Player</title>
+<title>IPTV WAEL — Smart Pro Full</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
@@ -23,10 +23,10 @@ header h1{font-size:22px;font-weight:700;letter-spacing:1px}
 .big-card .count{font-size:12px;opacity:.6;text-align:center}
 
 /* PLAYER */
-.player{background:#000;border-radius:18px;padding:10px;margin:20px 16px 10px 16px}
+.player{background:#000;border-radius:18px;padding:10px;margin-bottom:14px}
 iframe{border:0;border-radius:12px;width:100%;height:380px}
 
-/* GRID FOR CHANNELS */
+/* GRID CHANNELS */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:14px;margin-top:14px}
 .card{background:#111;border:1px solid #222;border-radius:14px;padding:10px;cursor:pointer;transition:.2s;text-align:center;overflow:hidden;position:relative}
 .card:hover{background:#1a1a1a;transform:scale(1.03)}
@@ -53,7 +53,7 @@ iframe{border:0;border-radius:12px;width:100%;height:380px}
 
 <header>
   <h1>IPTV WAEL</h1>
-  <div class="badge-app">IBO Player Style</div>
+  <div class="badge-app">Smart Pro Full</div>
 </header>
 
 <!-- HOME -->
@@ -68,7 +68,7 @@ iframe{border:0;border-radius:12px;width:100%;height:380px}
   <div class="grid" id="list-premium"></div>
 </div>
 
-<!-- MODAL -->
+<!-- MODAL PREMIUM -->
 <div class="modal-bg" id="modal">
   <div class="modal">
     <h3>Enter Premium Code</h3>
@@ -78,8 +78,9 @@ iframe{border:0;border-radius:12px;width:100%;height:380px}
 </div>
 
 <script>
+// CONFIGURATION
 const CONFIG = {
-  sections:[
+  sections: [
     {name:'Sports',icon:'⚽',count:12,premium:false},
     {name:'News',icon:'📰',count:14,premium:false},
     {name:'Films',icon:'🎬',count:16,premium:false},
@@ -89,19 +90,19 @@ const CONFIG = {
   premiumCode:'061008'
 };
 
-// CREATE CHANNEL LINKS
-function generateChannels(section){
+// GENERATE PLACEHOLDER CHANNELS
+const generateChannels = (section)=>{
   let arr=[];
   for(let i=1;i<=section.count;i++){
     arr.push({
-      url:`https://www.youtube.com/embed/${section.name}_${i}?controls=0&modestbranding=1&rel=0&showinfo=0&autoplay=1`,
-      thumb:`https://via.placeholder.com/120x90?text=${section.name}_${i}`
+      url:`https://www.youtube.com/embed/${section.name}_${i}`, // انت هنا تبدل الرابط ديال كل قناة
+      thumb:`https://via.placeholder.com/120x90?text=${section.name}_${i}` // الصورة placeholder، تبدلها براحتك
     });
   }
   return arr;
 }
 
-// SHOW PAGE
+// NAVIGATION
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -109,21 +110,21 @@ function showPage(id){
 
 // PLAY VIDEO
 function play(playerId,url){
-  document.getElementById(playerId).src=url;
+  document.getElementById(playerId).src = url+'?autoplay=1&controls=0&modestbranding=1&rel=0&showinfo=0';
 }
 
+// PREMIUM MODAL
 let wantedUrl=null;
-function askPremium(playerId,url){
-  wantedUrl={playerId,url};
-  document.getElementById('modal').style.display='flex';
+function askPremium(playerId,url){ 
+  wantedUrl={playerId,url}; 
+  document.getElementById('modal').style.display='flex'; 
 }
-
-function unlock(){
-  const code=document.getElementById('code').value;
-  if(code===CONFIG.premiumCode && wantedUrl){
-    document.getElementById('modal').style.display='none';
-    play(wantedUrl.playerId,wantedUrl.url);
-  }
+function unlock(){ 
+  const code=document.getElementById('code').value; 
+  if(code===CONFIG.premiumCode && wantedUrl){ 
+    document.getElementById('modal').style.display='none'; 
+    play(wantedUrl.playerId,wantedUrl.url); 
+  } 
 }
 
 // RENDER HOME GRID
@@ -143,8 +144,8 @@ CONFIG.sections.forEach(sec=>{
         div.id=id;
         div.className='page';
         div.innerHTML=`<button class='back-btn' onclick="showPage('home')">⬅ Home</button>
-        <div class='player'><iframe id='player-${sec.name.toLowerCase()}'></iframe></div>
-        <div class='grid' id='list-${sec.name.toLowerCase()}'></div>`;
+          <div class='player'><iframe id='player-${sec.name.toLowerCase()}'></iframe></div>
+          <div class='grid' id='list-${sec.name.toLowerCase()}'></div>`;
         document.body.appendChild(div);
         render(generateChannels(sec),`list-${sec.name.toLowerCase()}`,'player-'+sec.name.toLowerCase());
       }
@@ -154,21 +155,22 @@ CONFIG.sections.forEach(sec=>{
   homeGrid.appendChild(card);
 });
 
-// RENDER CHANNELS
-function render(list,wrapId,playerId,locked=false){
+// RENDER CHANNELS GRID
+function render(list, wrapId, playerId, locked=false){
   const box=document.getElementById(wrapId);
   box.innerHTML='';
   list.forEach((obj,i)=>{
     const c=document.createElement('div');
     c.className='card';
     c.innerHTML=`<div class='thumb' style='background-image:url(${obj.thumb})'></div>
-    <div class='title'>${wrapId.toUpperCase()} ${i+1}</div>
-    <span class='tag ${locked?'premium':'live'}'>${locked?'PREMIUM':'LIVE'}</span>`;
+      <div class='title'>${wrapId.toUpperCase()} ${i+1}</div>
+      <span class='tag ${locked?'premium':'live'}'>${locked?'PREMIUM':'LIVE'}</span>`;
     c.onclick=()=> locked? askPremium(playerId,obj.url):play(playerId,obj.url);
     box.appendChild(c);
   });
   if(list[0]) play(playerId,list[0]);
 }
 </script>
+
 </body>
 </html>
