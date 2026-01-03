@@ -3,22 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IPTV WAEL — IBO Player Full</title>
+<title>IPTV WAEL — IBO Player</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
 body{background:#010101;color:#fff}
+
+/* HEADER */
 header{background:linear-gradient(180deg,#111,#000);padding:16px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #222}
 header h1{font-size:22px;font-weight:700;letter-spacing:1px}
 .badge-app{font-size:11px;color:#aaa}
+
+/* HOME GRID */
 .home-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:22px;justify-items:center;margin:25px 16px}
 .big-card{background:#111;border:1px solid #222;border-radius:20px;padding:22px;cursor:pointer;min-height:160px;display:flex;flex-direction:column;justify-content:center;align-items:center;transition:.3s}
 .big-card:hover{background:#1a1a1a;transform:scale(1.06)}
 .big-card .icon{font-size:50px;margin-bottom:14px}
 .big-card .label{font-size:16px;font-weight:700;margin-bottom:6px;text-align:center}
 .big-card .count{font-size:12px;opacity:.6;text-align:center}
-.player{background:#000;border-radius:18px;padding:10px;margin-bottom:14px}
+
+/* PLAYER */
+.player{background:#000;border-radius:18px;padding:10px;margin:20px 16px 10px 16px}
 iframe{border:0;border-radius:12px;width:100%;height:380px}
+
+/* GRID FOR CHANNELS */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:14px;margin-top:14px}
 .card{background:#111;border:1px solid #222;border-radius:14px;padding:10px;cursor:pointer;transition:.2s;text-align:center;overflow:hidden;position:relative}
 .card:hover{background:#1a1a1a;transform:scale(1.03)}
@@ -27,8 +35,12 @@ iframe{border:0;border-radius:12px;width:100%;height:380px}
 .tag{font-size:10px;margin-top:4px;display:inline-block;padding:2px 8px;border-radius:10px;position:absolute;top:8px;right:8px}
 .live{background:#22c55e;color:#022}
 .premium{background:#fbbf24;color:#2c1a00}
+
+/* BACK BUTTON */
 .back-btn{margin:10px 16px;border:0;background:#1a1a1a;color:#fff;padding:8px 12px;border-radius:12px;cursor:pointer;transition:.2s}
 .back-btn:hover{background:#22c55e;color:#022}
+
+/* MODAL */
 .modal-bg{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center;z-index:999}
 .modal{background:#111;border-radius:14px;padding:20px;width:92%;max-width:350px}
 .modal h3{margin-bottom:12px;font-weight:600}
@@ -41,19 +53,22 @@ iframe{border:0;border-radius:12px;width:100%;height:380px}
 
 <header>
   <h1>IPTV WAEL</h1>
-  <div class="badge-app">IBO Player Full</div>
+  <div class="badge-app">IBO Player Style</div>
 </header>
 
+<!-- HOME -->
 <div id="home" class="page active">
   <div class="home-grid" id="home-grid"></div>
 </div>
 
+<!-- PREMIUM PAGE -->
 <div id="premium" class="page">
   <button class="back-btn" onclick="showPage('home')">⬅ Home</button>
   <div class="player"><iframe id="player-premium"></iframe></div>
   <div class="grid" id="list-premium"></div>
 </div>
 
+<!-- MODAL -->
 <div class="modal-bg" id="modal">
   <div class="modal">
     <h3>Enter Premium Code</h3>
@@ -64,39 +79,54 @@ iframe{border:0;border-radius:12px;width:100%;height:380px}
 
 <script>
 const CONFIG = {
-  sections: [
-    {name:'Sports',icon:'⚽',count:12,premium:false, links:[
-      'https://www.youtube.com/embed/SPORT_1','https://www.youtube.com/embed/SPORT_2','https://www.youtube.com/embed/SPORT_3','https://www.youtube.com/embed/SPORT_4','https://www.youtube.com/embed/SPORT_5','https://www.youtube.com/embed/SPORT_6','https://www.youtube.com/embed/SPORT_7','https://www.youtube.com/embed/SPORT_8','https://www.youtube.com/embed/SPORT_9','https://www.youtube.com/embed/SPORT_10','https://www.youtube.com/embed/SPORT_11','https://www.youtube.com/embed/SPORT_12'
-    ]},
-    {name:'News',icon:'📰',count:14,premium:false, links:[
-      'https://www.youtube.com/embed/NEWS_1','https://www.youtube.com/embed/NEWS_2','https://www.youtube.com/embed/NEWS_3','https://www.youtube.com/embed/NEWS_4','https://www.youtube.com/embed/NEWS_5','https://www.youtube.com/embed/NEWS_6','https://www.youtube.com/embed/NEWS_7','https://www.youtube.com/embed/NEWS_8','https://www.youtube.com/embed/NEWS_9','https://www.youtube.com/embed/NEWS_10','https://www.youtube.com/embed/NEWS_11','https://www.youtube.com/embed/NEWS_12','https://www.youtube.com/embed/NEWS_13','https://www.youtube.com/embed/NEWS_14'
-    ]},
-    {name:'Films',icon:'🎬',count:16,premium:false, links:[
-      'https://www.youtube.com/embed/FILM_1','https://www.youtube.com/embed/FILM_2','https://www.youtube.com/embed/FILM_3','https://www.youtube.com/embed/FILM_4','https://www.youtube.com/embed/FILM_5','https://www.youtube.com/embed/FILM_6','https://www.youtube.com/embed/FILM_7','https://www.youtube.com/embed/FILM_8','https://www.youtube.com/embed/FILM_9','https://www.youtube.com/embed/FILM_10','https://www.youtube.com/embed/FILM_11','https://www.youtube.com/embed/FILM_12','https://www.youtube.com/embed/FILM_13','https://www.youtube.com/embed/FILM_14','https://www.youtube.com/embed/FILM_15','https://www.youtube.com/embed/FILM_16'
-    ]},
-    {name:'Documentaries',icon:'📺',count:12,premium:false, links:[
-      'https://www.youtube.com/embed/DOC_1','https://www.youtube.com/embed/DOC_2','https://www.youtube.com/embed/DOC_3','https://www.youtube.com/embed/DOC_4','https://www.youtube.com/embed/DOC_5','https://www.youtube.com/embed/DOC_6','https://www.youtube.com/embed/DOC_7','https://www.youtube.com/embed/DOC_8','https://www.youtube.com/embed/DOC_9','https://www.youtube.com/embed/DOC_10','https://www.youtube.com/embed/DOC_11','https://www.youtube.com/embed/DOC_12'
-    ]},
-    {name:'Premium',icon:'⭐',count:15,premium:true, links:[
-      'https://www.youtube.com/embed/PREM_1','https://www.youtube.com/embed/PREM_2','https://www.youtube.com/embed/PREM_3','https://www.youtube.com/embed/PREM_4','https://www.youtube.com/embed/PREM_5','https://www.youtube.com/embed/PREM_6','https://www.youtube.com/embed/PREM_7','https://www.youtube.com/embed/PREM_8','https://www.youtube.com/embed/PREM_9','https://www.youtube.com/embed/PREM_10','https://www.youtube.com/embed/PREM_11','https://www.youtube.com/embed/PREM_12','https://www.youtube.com/embed/PREM_13','https://www.youtube.com/embed/PREM_14','https://www.youtube.com/embed/PREM_15'
-    ]}
+  sections:[
+    {name:'Sports',icon:'⚽',count:12,premium:false},
+    {name:'News',icon:'📰',count:14,premium:false},
+    {name:'Films',icon:'🎬',count:16,premium:false},
+    {name:'Documentaries',icon:'📺',count:12,premium:false},
+    {name:'Premium',icon:'⭐',count:15,premium:true}
   ],
   premiumCode:'061008'
 };
 
+// CREATE CHANNEL LINKS
+function generateChannels(section){
+  let arr=[];
+  for(let i=1;i<=section.count;i++){
+    arr.push({
+      url:`https://www.youtube.com/embed/${section.name}_${i}?controls=0&modestbranding=1&rel=0&showinfo=0&autoplay=1`,
+      thumb:`https://via.placeholder.com/120x90?text=${section.name}_${i}`
+    });
+  }
+  return arr;
+}
+
+// SHOW PAGE
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
+// PLAY VIDEO
 function play(playerId,url){
-  document.getElementById(playerId).src = url+'?autoplay=1&controls=1&modestbranding=1&rel=0&showinfo=0';
+  document.getElementById(playerId).src=url;
 }
 
 let wantedUrl=null;
-function askPremium(playerId,url){ wantedUrl={playerId,url}; document.getElementById('modal').style.display='flex'; }
-function unlock(){ const code=document.getElementById('code').value; if(code===CONFIG.premiumCode && wantedUrl){ document.getElementById('modal').style.display='none'; play(wantedUrl.playerId,wantedUrl.url); }}
+function askPremium(playerId,url){
+  wantedUrl={playerId,url};
+  document.getElementById('modal').style.display='flex';
+}
 
+function unlock(){
+  const code=document.getElementById('code').value;
+  if(code===CONFIG.premiumCode && wantedUrl){
+    document.getElementById('modal').style.display='none';
+    play(wantedUrl.playerId,wantedUrl.url);
+  }
+}
+
+// RENDER HOME GRID
 const homeGrid=document.getElementById('home-grid');
 CONFIG.sections.forEach(sec=>{
   const card=document.createElement('div');
@@ -105,16 +135,18 @@ CONFIG.sections.forEach(sec=>{
   card.onclick=()=>{
     const id=sec.premium?'premium':'section-'+sec.name.toLowerCase();
     if(sec.premium){
-      render(sec.links,'list-premium','player-premium',true);
+      render(generateChannels(sec),'list-premium','player-premium',true);
       showPage('premium');
     } else {
       if(!document.getElementById(id)){
         const div=document.createElement('div');
         div.id=id;
         div.className='page';
-        div.innerHTML=`<button class='back-btn' onclick="showPage('home')">⬅ Home</button><div class='player'><iframe id='player-${sec.name.toLowerCase()}'></iframe></div><div class='grid' id='list-${sec.name.toLowerCase()}'></div>`;
+        div.innerHTML=`<button class='back-btn' onclick="showPage('home')">⬅ Home</button>
+        <div class='player'><iframe id='player-${sec.name.toLowerCase()}'></iframe></div>
+        <div class='grid' id='list-${sec.name.toLowerCase()}'></div>`;
         document.body.appendChild(div);
-        render(sec.links,`list-${sec.name.toLowerCase()}`,'player-'+sec.name.toLowerCase());
+        render(generateChannels(sec),`list-${sec.name.toLowerCase()}`,'player-'+sec.name.toLowerCase());
       }
       showPage(id);
     }
@@ -122,14 +154,17 @@ CONFIG.sections.forEach(sec=>{
   homeGrid.appendChild(card);
 });
 
-function render(list, wrapId, playerId, locked=false){
+// RENDER CHANNELS
+function render(list,wrapId,playerId,locked=false){
   const box=document.getElementById(wrapId);
   box.innerHTML='';
-  list.forEach((url,i)=>{
+  list.forEach((obj,i)=>{
     const c=document.createElement('div');
     c.className='card';
-    c.innerHTML=`<div class='thumb'></div><div class='title'>${wrapId.toUpperCase()} ${i+1}</div><span class='tag ${locked?'premium':'live'}'>${locked?'PREMIUM':'LIVE'}</span>`;
-    c.onclick=()=> locked? askPremium(playerId,url):play(playerId,url);
+    c.innerHTML=`<div class='thumb' style='background-image:url(${obj.thumb})'></div>
+    <div class='title'>${wrapId.toUpperCase()} ${i+1}</div>
+    <span class='tag ${locked?'premium':'live'}'>${locked?'PREMIUM':'LIVE'}</span>`;
+    c.onclick=()=> locked? askPremium(playerId,obj.url):play(playerId,obj.url);
     box.appendChild(c);
   });
   if(list[0]) play(playerId,list[0]);
