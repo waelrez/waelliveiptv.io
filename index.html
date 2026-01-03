@@ -56,19 +56,16 @@ iframe{border:0;border-radius:12px;width:100%;height:380px}
   <div class="badge-app">Smart Pro Full</div>
 </header>
 
-<!-- HOME -->
 <div id="home" class="page active">
   <div class="home-grid" id="home-grid"></div>
 </div>
 
-<!-- PREMIUM PAGE -->
 <div id="premium" class="page">
   <button class="back-btn" onclick="showPage('home')">⬅ Home</button>
   <div class="player"><iframe id="player-premium"></iframe></div>
   <div class="grid" id="list-premium"></div>
 </div>
 
-<!-- MODAL PREMIUM -->
 <div class="modal-bg" id="modal">
   <div class="modal">
     <h3>Enter Premium Code</h3>
@@ -81,62 +78,112 @@ iframe{border:0;border-radius:12px;width:100%;height:380px}
 // CONFIGURATION
 const CONFIG = {
   sections: [
-    {name:'Sports',icon:'⚽',count:12,premium:false},
-    {name:'News',icon:'📰',count:14,premium:false},
-    {name:'Films',icon:'🎬',count:16,premium:false},
-    {name:'Documentaries',icon:'📺',count:12,premium:false},
-    {name:'Premium',icon:'⭐',count:15,premium:true}
+    {name:'Sports',icon:'⚽',premium:false,channels:[
+      {title:'Sports 1', url:'LINK1'},
+      {title:'Sports 2', url:'LINK2'},
+      {title:'Sports 3', url:'LINK3'},
+      {title:'Sports 4', url:'LINK4'},
+      {title:'Sports 5', url:'LINK5'},
+      {title:'Sports 6', url:'LINK6'},
+      {title:'Sports 7', url:'LINK7'},
+      {title:'Sports 8', url:'LINK8'},
+      {title:'Sports 9', url:'LINK9'},
+      {title:'Sports 10', url:'LINK10'},
+      {title:'Sports 11', url:'LINK11'},
+      {title:'Sports 12', url:'LINK12'}
+    ]},
+    {name:'News',icon:'📰',premium:false,channels:[
+      {title:'News 1', url:'LINK1'},
+      {title:'News 2', url:'LINK2'},
+      {title:'News 3', url:'LINK3'},
+      {title:'News 4', url:'LINK4'},
+      {title:'News 5', url:'LINK5'},
+      {title:'News 6', url:'LINK6'},
+      {title:'News 7', url:'LINK7'},
+      {title:'News 8', url:'LINK8'},
+      {title:'News 9', url:'LINK9'},
+      {title:'News 10', url:'LINK10'},
+      {title:'News 11', url:'LINK11'},
+      {title:'News 12', url:'LINK12'},
+      {title:'News 13', url:'LINK13'},
+      {title:'News 14', url:'LINK14'}
+    ]},
+    {name:'Films',icon:'🎬',premium:false,channels:[
+      {title:'Film 1', url:'LINK1'},
+      {title:'Film 2', url:'LINK2'},
+      {title:'Film 3', url:'LINK3'},
+      {title:'Film 4', url:'LINK4'},
+      {title:'Film 5', url:'LINK5'},
+      {title:'Film 6', url:'LINK6'},
+      {title:'Film 7', url:'LINK7'},
+      {title:'Film 8', url:'LINK8'},
+      {title:'Film 9', url:'LINK9'},
+      {title:'Film 10', url:'LINK10'},
+      {title:'Film 11', url:'LINK11'},
+      {title:'Film 12', url:'LINK12'},
+      {title:'Film 13', url:'LINK13'},
+      {title:'Film 14', url:'LINK14'},
+      {title:'Film 15', url:'LINK15'},
+      {title:'Film 16', url:'LINK16'}
+    ]},
+    {name:'Documentaries',icon:'📺',premium:false,channels:[
+      {title:'Doc 1', url:'LINK1'},
+      {title:'Doc 2', url:'LINK2'},
+      {title:'Doc 3', url:'LINK3'},
+      {title:'Doc 4', url:'LINK4'},
+      {title:'Doc 5', url:'LINK5'},
+      {title:'Doc 6', url:'LINK6'},
+      {title:'Doc 7', url:'LINK7'},
+      {title:'Doc 8', url:'LINK8'},
+      {title:'Doc 9', url:'LINK9'},
+      {title:'Doc 10', url:'LINK10'},
+      {title:'Doc 11', url:'LINK11'},
+      {title:'Doc 12', url:'LINK12'}
+    ]},
+    {name:'Premium',icon:'⭐',premium:true,channels:[
+      {title:'Premium 1', url:'LINK1'},
+      {title:'Premium 2', url:'LINK2'},
+      {title:'Premium 3', url:'LINK3'},
+      {title:'Premium 4', url:'LINK4'},
+      {title:'Premium 5', url:'LINK5'},
+      {title:'Premium 6', url:'LINK6'},
+      {title:'Premium 7', url:'LINK7'},
+      {title:'Premium 8', url:'LINK8'},
+      {title:'Premium 9', url:'LINK9'},
+      {title:'Premium 10', url:'LINK10'},
+      {title:'Premium 11', url:'LINK11'},
+      {title:'Premium 12', url:'LINK12'},
+      {title:'Premium 13', url:'LINK13'},
+      {title:'Premium 14', url:'LINK14'},
+      {title:'Premium 15', url:'LINK15'}
+    ]}
   ],
-  premiumCode:'061008'
+  premiumCode: '061008'
 };
 
-// GENERATE PLACEHOLDER CHANNELS
-const generateChannels = (section)=>{
-  let arr=[];
-  for(let i=1;i<=section.count;i++){
-    arr.push({
-      url:`https://www.youtube.com/embed/${section.name}_${i}`, // انت هنا تبدل الرابط ديال كل قناة
-      thumb:`https://via.placeholder.com/120x90?text=${section.name}_${i}` // الصورة placeholder، تبدلها براحتك
-    });
-  }
-  return arr;
-}
-
-// NAVIGATION
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
-// PLAY VIDEO
 function play(playerId,url){
   document.getElementById(playerId).src = url+'?autoplay=1&controls=0&modestbranding=1&rel=0&showinfo=0';
 }
 
-// PREMIUM MODAL
 let wantedUrl=null;
-function askPremium(playerId,url){ 
-  wantedUrl={playerId,url}; 
-  document.getElementById('modal').style.display='flex'; 
-}
-function unlock(){ 
-  const code=document.getElementById('code').value; 
-  if(code===CONFIG.premiumCode && wantedUrl){ 
-    document.getElementById('modal').style.display='none'; 
-    play(wantedUrl.playerId,wantedUrl.url); 
-  } 
-}
+function askPremium(playerId,url){ wantedUrl={playerId,url}; document.getElementById('modal').style.display='flex'; }
+function unlock(){ const code=document.getElementById('code').value; if(code===CONFIG.premiumCode && wantedUrl){ document.getElementById('modal').style.display='none'; play(wantedUrl.playerId,wantedUrl.url); } }
 
-// RENDER HOME GRID
+// Render Home Grid
 const homeGrid=document.getElementById('home-grid');
 CONFIG.sections.forEach(sec=>{
   const card=document.createElement('div');
   card.className='big-card';
-  card.innerHTML=`<div class='icon'>${sec.icon}</div><div class='label'>${sec.name}</div><div class='count'>${sec.count} Channels</div>`;
+  card.innerHTML=`<div class='icon'>${sec.icon}</div><div class='label'>${sec.name}</div><div class='count'>${sec.channels.length} Channels</div>`;
   card.onclick=()=>{
     const id=sec.premium?'premium':'section-'+sec.name.toLowerCase();
     if(sec.premium){
-      render(generateChannels(sec),'list-premium','player-premium',true);
+      render(sec.channels,'list-premium','player-premium',true);
       showPage('premium');
     } else {
       if(!document.getElementById(id)){
@@ -147,7 +194,7 @@ CONFIG.sections.forEach(sec=>{
           <div class='player'><iframe id='player-${sec.name.toLowerCase()}'></iframe></div>
           <div class='grid' id='list-${sec.name.toLowerCase()}'></div>`;
         document.body.appendChild(div);
-        render(generateChannels(sec),`list-${sec.name.toLowerCase()}`,'player-'+sec.name.toLowerCase());
+        render(sec.channels,`list-${sec.name.toLowerCase()}`,'player-'+sec.name.toLowerCase());
       }
       showPage(id);
     }
@@ -155,15 +202,15 @@ CONFIG.sections.forEach(sec=>{
   homeGrid.appendChild(card);
 });
 
-// RENDER CHANNELS GRID
+// Render Channels
 function render(list, wrapId, playerId, locked=false){
   const box=document.getElementById(wrapId);
   box.innerHTML='';
   list.forEach((obj,i)=>{
     const c=document.createElement('div');
     c.className='card';
-    c.innerHTML=`<div class='thumb' style='background-image:url(${obj.thumb})'></div>
-      <div class='title'>${wrapId.toUpperCase()} ${i+1}</div>
+    c.innerHTML=`<div class='thumb' style='background-image:url(https://via.placeholder.com/120x90?text=${obj.title.replace(/\s/g,'+')})'></div>
+      <div class='title'>${obj.title}</div>
       <span class='tag ${locked?'premium':'live'}'>${locked?'PREMIUM':'LIVE'}</span>`;
     c.onclick=()=> locked? askPremium(playerId,obj.url):play(playerId,obj.url);
     box.appendChild(c);
@@ -171,6 +218,5 @@ function render(list, wrapId, playerId, locked=false){
   if(list[0]) play(playerId,list[0]);
 }
 </script>
-
 </body>
 </html>
