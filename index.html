@@ -1,137 +1,286 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Premium (15) — Code: 061008 IPTV Hub</title>
-  <style>
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto;background:#0b0e14;color:#f3f5fa}
-    .hero{background:linear-gradient(180deg,#111726,#0b0e14);padding:48px 18px 28px;border-bottom:1px solid #1d2233}
-    .hero .logo{font-size:32px;font-weight:900;letter-spacing:.5px}
-    .hero .tag{opacity:.85;margin-top:6px;font-size:14px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:16px;padding:20px 16px 36px;max-width:1150px;margin:0 auto}
-    .card{background:#111726;border:1px solid #1d2233;border-radius:18px;padding:18px;cursor:pointer;transition:all .2s ease;display:flex;flex-direction:column;justify-content:space-between}
-    .card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,.35);border-color:#2d83ff}
-    .card .icon{width:42px;height:42px;border-radius:12px;background:#0b0e14;border:1px solid #1d2233;display:flex;align-items:center;justify-content:center;font-weight:800}
-    .card h3{margin:14px 0 4px;font-size:15px}
-    .card p{margin:0;font-size:12px;opacity:.75}
-    .section{max-width:1150px;margin:0 auto;padding:10px 16px 26px;display:none}
-    .section.active{display:block}
-    .chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 14px}
-    .chip{padding:7px 10px;border-radius:12px;background:#161b2b;border:1px solid #22283f;font-size:12px;white-space:nowrap}
-    .items{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
-    .item{background:#0f1320;border:1px solid #1d2233;border-radius:16px;padding:12px;font-size:12px}
-    .back{font-size:12px;opacity:.8;cursor:pointer;margin-bottom:10px}
-    a{color:inherit;text-decoration:none}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IPTV WAEL — IBO Style</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{background:#030303;color:#fff}
+
+/* TOP BAR */
+header{background:linear-gradient(180deg,#080808,#0f0f0f);border-bottom:1px solid #1b1b1b;padding:14px 18px;display:flex;align-items:center;justify-content:space-between}
+header h1{font-size:18px;letter-spacing:1px}
+.badge-app{font-size:11px;color:#ccc}
+
+/* PAGES */
+.page{display:none;padding:16px}
+.page.active{display:block}
+
+/* HOME — BIG CARDS */
+.home-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.big-card{background:#0e0e0e;border:1px solid #1f1f1f;border-radius:18px;padding:16px;cursor:pointer;min-height:130px;display:flex;flex-direction:column;justify-content:space-between;transition:.2s}
+.big-card:hover{background:#151515}
+.big-card .icon{font-size:26px;opacity:.9}
+.big-card .label{font-size:14px;font-weight:700}
+.big-card .count{font-size:11px;opacity:.6}
+
+/* PLAYER */
+.player{background:#000;border-radius:18px;padding:10px;margin-bottom:14px}
+iframe{border:0;border-radius:10px;width:100%;height:380px}
+
+/* LISTS */
+.section-title{font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px}
+.card{background:#101010;border:1px solid #1d1d1d;border-radius:14px;padding:10px;cursor:pointer}
+.card:hover{background:#171717}
+.thumb{height:78px;border-radius:10px;background:#1e1e1e center/50px no-repeat}
+.title{font-size:12px;margin-top:6px}
+.tag{font-size:10px;margin-top:3px;display:inline-block;padding:2px 8px;border-radius:10px}
+.live{background:#22c55e;color:#022}
+.premium{background:#fbbf24;color:#2c1a00}
+
+/* NAV */
+nav{position:sticky;bottom:0;background:#0d0d0d;border-top:1px solid #1c1c1c;padding:10px 16px;display:flex;justify-content:space-between}
+nav button{flex:1;margin:0 4px;border:0;border-radius:12px;padding:10px;background:#151515;color:#fff;cursor:pointer}
+nav button.active{background:#22c55e;color:#021;font-weight:700}
+
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center}
+.modal{background:#0f0f0f;border-radius:14px;padding:18px;width:92%;max-width:350px}
+.modal h3{margin-bottom:6px}
+.modal input{width:100%;padding:10px;border:1px solid #333;border-radius:10px;background:#0a0a0a;color:#fff}
+.modal button{margin-top:10px;width:100%;padding:10px;border-radius:10px;border:0;background:#22c55e;color:#012;font-weight:700;cursor:pointer}
+.back-btn{margin-bottom:10px;border:0;background:#151515;color:#fff;padding:8px 12px;border-radius:10px;cursor:pointer}
+</style>
 </head>
 <body>
-  <header class="hero">
-    <div class="logo">IPTV • PREMIUM</div>
-    <div class="tag">All your channels — Sports (12), Films (16), News (14), Documentaries (12), & more</div>
-  </header>
 
-  <!-- HOME GRID -->
-  <main id="home" class="grid">
-    <div class="card" onclick="openSection('films')">
-      <div>
-        <div class="icon">🎬</div>
-        <h3>Films (16)</h3>
-        <p>16 premium films</p>
-      </div>
+<header>
+  <h1>IPTV WAEL</h1>
+  <div class="badge-app">IBO Player style</div>
+</header>
+
+<!-- HOME -->
+<div id="home" class="page active">
+  <div class="home-grid">
+    <div class="big-card" onclick="showPage('sports')">
+      <div class="icon">⚽</div>
+      <div class="label">Sports</div>
+      <div class="count">12 channels</div>
     </div>
-    <div class="card" onclick="openSection('sports')">
-      <div class="icon">🏆</div>
-      <h3>Sports (12)</h3>
-      <p>12 channels</p>
-    </div>
-    <div class="card" onclick="openSection('news')">
+    <div class="big-card" onclick="showPage('news')">
       <div class="icon">📰</div>
-      <h3>News (14)</h3>
-      <p>14 channels</p>
+      <div class="label">News</div>
+      <div class="count">14 channels</div>
     </div>
-    <div class="card" onclick="openSection('document')">
-      <div class="icon">📚</div>
-      <h3>Documentaries (12)</h3>
-      <p>12 channels</p>
+    <div class="big-card" onclick="showPage('films')">
+      <div class="icon">🎬</div>
+      <div class="label">Films</div>
+      <div class="count">16 channels</div>
     </div>
-    <div class="card" onclick="openSection('premium')">
+    <div class="big-card" onclick="showPage('docs')">
+      <div class="icon">📺</div>
+      <div class="label">Documentaries</div>
+      <div class="count">12 channels</div>
+    </div>
+    <div class="big-card" onclick="showPage('premium')">
       <div class="icon">⭐</div>
-      <h3>Premium (15) — Code: 061008 Live</h3>
-      <p>15 radios & TV</p>
+      <div class="label">Premium</div>
+      <div class="count">Code: 061008</div>
     </div>
-  </main>
+  </div>
+</div>
 
-  <!-- FILMS SECTION -->
-  <section id="films" class="section">
-    <div class="back" onclick="goHome()">← Back</div>
-    <div class="chips">
-      <div class="chip">Action</div><div class="chip">Drama</div><div class="chip">Comedy</div><div class="chip">Sci‑Fi</div>
-    </div>
-    <div class="items">
-      <!-- Replace href with your YouTube or streaming links -->
-      <a class="item" href="https://www.youtube.com/watch?v=XXXX" target="_blank">Film 01</a>
-      <a class="item" href="https://www.youtube.com/watch?v=XXXX" target="_blank">Film 02</a>
-      <a class="item" href="https://www.youtube.com/watch?v=XXXX" target="_blank">Film 03</a>
-      <!-- add more… up to 16 -->
-    </div>
-  </section>
+<!-- SPORTS PAGE -->
+<div id="sports" class="page">
+  <button class="back-btn" onclick="showPage('home')">⬅ Home</button>
+  <div class="player"><iframe id="player-sports"></iframe></div>
+  <div class="section-title">Sports (12)</div>
+  <div class="grid" id="list-sports"></div>
+</div>
 
-  <!-- SPORTS SECTION -->
-  <section id="sports" class="section">
-    <div class="back" onclick="goHome()">← Back</div>
-    <div class="items">
-      <a class="item" href="https://www.youtube.com/live/XXXX" target="_blank">Sport Live 01</a>
-      <a class="item" href="https://www.youtube.com/live/XXXX" target="_blank">Sport Live 02</a>
-      <!-- add up to 12 -->
-    </div>
-  </section>
+<!-- NEWS PAGE -->
+<div id="news" class="page">
+  <button class="back-btn" onclick="showPage('home')">⬅ Home</button>
+  <div class="player"><iframe id="player-news"></iframe></div>
+  <div class="section-title">News (14)</div>
+  <div class="grid" id="list-news"></div>
+</div>
 
-  <!-- NEWS SECTION -->
-  <section id="news" class="section">
-    <div class="back" onclick="goHome()">← Back</div>
-    <div class="items">
-      <a class="item" href="https://www.youtube.com/live/XXXX" target="_blank">News (14) Channel 01</a>
-      <!-- add up to 14 -->
-    </div>
-  </section>
+<!-- FILMS PAGE -->
+<div id="films" class="page">
+  <button class="back-btn" onclick="showPage('home')">⬅ Home</button>
+  <div class="player"><iframe id="player-films"></iframe></div>
+  <div class="section-title">Films (16)</div>
+  <div class="grid" id="list-films"></div>
+</div>
 
-  <!-- DOCUMENT SECTION -->
-  <section id="document" class="section">
-    <div class="back" onclick="goHome()">← Back</div>
-    <div class="items">
-      <a class="item" href="https://www.youtube.com/watch?v=XXXX" target="_blank">Documentary 01</a>
-      <!-- add up to 12 -->
-    </div>
-  </section>
+<!-- DOCS PAGE -->
+<div id="docs" class="page">
+  <button class="back-btn" onclick="showPage('home')">⬅ Home</button>
+  <div class="player"><iframe id="player-docs"></iframe></div>
+  <div class="section-title">Documentaries (12)</div>
+  <div class="grid" id="list-docs"></div>
+</div>
 
-  <!-- PREMIUM SECTION (4 featured lives included) -->
-  <section id="premium" class="section">
-    <div class="back" onclick="goHome()">← Back</div>
-    <div class="chips"><div class="chip">Featured</div><div class="chip">Radio</div><div class="chip">VIP</div></div>
-    <div class="items">
-      <!-- 4 premium lives you can replace anytime -->
-      <a class="item" href="https://www.youtube.com/live/PREMIUM1" target="_blank">Premium (15) — Code: 061008 Live 01</a>
-      <a class="item" href="https://www.youtube.com/live/PREMIUM2" target="_blank">Premium (15) — Code: 061008 Live 02</a>
-      <a class="item" href="https://www.youtube.com/live/PREMIUM3" target="_blank">Premium (15) — Code: 061008 Live 03</a>
-      <a class="item" href="https://www.youtube.com/live/PREMIUM4" target="_blank">Premium (15) — Code: 061008 Live 04</a>
+<!-- PREMIUM PAGE -->
+<div id="premium" class="page">
+  <button class="back-btn" onclick="showPage('home')">⬅ Home</button>
+  <div class="player"><iframe id="player-premium"></iframe></div>
+  <div class="section-title">Premium (15) — Code required</div>
+  <div class="grid" id="list-premium"></div>
+</div>
 
-      <!-- add more premium up to 15 (radio or TV) -->
-    </div>
-  </section>
+<!-- MODAL -->
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <h3>Enter Premium Code</h3>
+    <input id="code" type="password" placeholder="••••••">
+    <button onclick="unlock()">Confirm</button>
+  </div>
+</div>
 
-  <script>
-    const home = document.getElementById('home');
-    function openSection(id){
-      home.style.display='none';
-      document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
-    function goHome(){
-      document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-      home.style.display='grid';
-    }
-  </script>
+<script>
+const CONFIG = {
+  // 👉 CHANGE LINKS HERE (YouTube embed links only)
+
+  sports: [
+    // SPORTS (12)
+    "https://www.youtube.com/embed/VIDEO_SPORT_1",
+    "https://www.youtube.com/embed/VIDEO_SPORT_2",
+    "https://www.youtube.com/embed/VIDEO_SPORT_3",
+    "https://www.youtube.com/embed/VIDEO_SPORT_4",
+    "https://www.youtube.com/embed/VIDEO_SPORT_5",
+    "https://www.youtube.com/embed/VIDEO_SPORT_6",
+    "https://www.youtube.com/embed/VIDEO_SPORT_7",
+    "https://www.youtube.com/embed/VIDEO_SPORT_8",
+    "https://www.youtube.com/embed/VIDEO_SPORT_9",
+    "https://www.youtube.com/embed/VIDEO_SPORT_10",
+    "https://www.youtube.com/embed/VIDEO_SPORT_11",
+    "https://www.youtube.com/embed/VIDEO_SPORT_12",
+  ],
+
+  news: [
+    // NEWS (14)
+    "https://www.youtube.com/embed/VIDEO_NEWS_1",
+    "https://www.youtube.com/embed/VIDEO_NEWS_2",
+    "https://www.youtube.com/embed/VIDEO_NEWS_3",
+    "https://www.youtube.com/embed/VIDEO_NEWS_4",
+    "https://www.youtube.com/embed/VIDEO_NEWS_5",
+    "https://www.youtube.com/embed/VIDEO_NEWS_6",
+    "https://www.youtube.com/embed/VIDEO_NEWS_7",
+    "https://www.youtube.com/embed/VIDEO_NEWS_8",
+    "https://www.youtube.com/embed/VIDEO_NEWS_9",
+    "https://www.youtube.com/embed/VIDEO_NEWS_10",
+    "https://www.youtube.com/embed/VIDEO_NEWS_11",
+    "https://www.youtube.com/embed/VIDEO_NEWS_12",
+    "https://www.youtube.com/embed/VIDEO_NEWS_13",
+    "https://www.youtube.com/embed/VIDEO_NEWS_14",
+  ],
+
+  films: [
+    // FILMS (16)
+    "https://www.youtube.com/embed/FILM_1",
+    "https://www.youtube.com/embed/FILM_2",
+    "https://www.youtube.com/embed/FILM_3",
+    "https://www.youtube.com/embed/FILM_4",
+    "https://www.youtube.com/embed/FILM_5",
+    "https://www.youtube.com/embed/FILM_6",
+    "https://www.youtube.com/embed/FILM_7",
+    "https://www.youtube.com/embed/FILM_8",
+    "https://www.youtube.com/embed/FILM_9",
+    "https://www.youtube.com/embed/FILM_10",
+    "https://www.youtube.com/embed/FILM_11",
+    "https://www.youtube.com/embed/FILM_12",
+    "https://www.youtube.com/embed/FILM_13",
+    "https://www.youtube.com/embed/FILM_14",
+    "https://www.youtube.com/embed/FILM_15",
+    "https://www.youtube.com/embed/FILM_16",
+  ],
+
+  docs: [
+    // DOCUMENTARIES (12)
+    "https://www.youtube.com/embed/DOC_1",
+    "https://www.youtube.com/embed/DOC_2",
+    "https://www.youtube.com/embed/DOC_3",
+    "https://www.youtube.com/embed/DOC_4",
+    "https://www.youtube.com/embed/DOC_5",
+    "https://www.youtube.com/embed/DOC_6",
+    "https://www.youtube.com/embed/DOC_7",
+    "https://www.youtube.com/embed/DOC_8",
+    "https://www.youtube.com/embed/DOC_9",
+    "https://www.youtube.com/embed/DOC_10",
+    "https://www.youtube.com/embed/DOC_11",
+    "https://www.youtube.com/embed/DOC_12",
+  ],
+
+  premium: [
+    // PREMIUM (15)
+    "https://www.youtube.com/embed/PREM_1",
+    "https://www.youtube.com/embed/PREM_2",
+    "https://www.youtube.com/embed/PREM_3",
+    "https://www.youtube.com/embed/PREM_4",
+    "https://www.youtube.com/embed/PREM_5",
+    "https://www.youtube.com/embed/PREM_6",
+    "https://www.youtube.com/embed/PREM_7",
+    "https://www.youtube.com/embed/PREM_8",
+    "https://www.youtube.com/embed/PREM_9",
+    "https://www.youtube.com/embed/PREM_10",
+    "https://www.youtube.com/embed/PREM_11",
+    "https://www.youtube.com/embed/PREM_12",
+    "https://www.youtube.com/embed/PREM_13",
+    "https://www.youtube.com/embed/PREM_14",
+    "https://www.youtube.com/embed/PREM_15",
+  ],
+
+  premiumCode: "061008"
+};
+
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function render(list, wrapId, playerId, locked=false){
+  const box = document.getElementById(wrapId);
+  box.innerHTML = '';
+  list.forEach((url,i)=>{
+    const c = document.createElement('div');
+    c.className='card';
+    c.innerHTML = `
+      <div class='thumb'></div>
+      <div class='title'>${wrapId.toUpperCase()} ${i+1}</div>
+      <span class='tag ${locked?'premium':'live'}'>${locked?'PREMIUM':'LIVE'}</span>`;
+    c.onclick = ()=> locked ? askPremium(playerId,url) : play(playerId,url);
+    box.appendChild(c);
+  });
+  if(list[0]) play(playerId,list[0]);
+}
+
+function play(playerId,url){
+  document.getElementById(playerId).src=url;
+}
+
+let wantedUrl = null;
+function askPremium(playerId,url){
+  wantedUrl = {playerId,url};
+  document.getElementById('modal').style.display='flex';
+}
+function unlock(){
+  const code = document.getElementById('code').value;
+  if(code===CONFIG.premiumCode && wantedUrl){
+    document.getElementById('modal').style.display='none';
+    play(wantedUrl.playerId,wantedUrl.url);
+  }
+}
+
+render(CONFIG.sports,'list-sports','player-sports');
+render(CONFIG.news,'list-news','player-news');
+render(CONFIG.films,'list-films','player-films');
+render(CONFIG.docs,'list-docs','player-docs');
+render(CONFIG.premium,'list-premium','player-premium',true);
+</script>
 </body>
 </html>
