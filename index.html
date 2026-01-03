@@ -1,286 +1,122 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>IPTV WAEL — IBO Style</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<title>WAEL IPTV</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
-body{background:#030303;color:#fff}
-
-/* TOP BAR */
-header{background:linear-gradient(180deg,#080808,#0f0f0f);border-bottom:1px solid #1b1b1b;padding:14px 18px;display:flex;align-items:center;justify-content:space-between}
-header h1{font-size:18px;letter-spacing:1px}
-.badge-app{font-size:11px;color:#ccc}
-
-/* PAGES */
-.page{display:none;padding:16px}
-.page.active{display:block}
-
-/* HOME — BIG CARDS */
-.home-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
-.big-card{background:#0e0e0e;border:1px solid #1f1f1f;border-radius:18px;padding:16px;cursor:pointer;min-height:130px;display:flex;flex-direction:column;justify-content:space-between;transition:.2s}
-.big-card:hover{background:#151515}
-.big-card .icon{font-size:26px;opacity:.9}
-.big-card .label{font-size:14px;font-weight:700}
-.big-card .count{font-size:11px;opacity:.6}
-
-/* PLAYER */
-.player{background:#000;border-radius:18px;padding:10px;margin-bottom:14px}
-iframe{border:0;border-radius:10px;width:100%;height:380px}
-
-/* LISTS */
-.section-title{font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px}
-.card{background:#101010;border:1px solid #1d1d1d;border-radius:14px;padding:10px;cursor:pointer}
-.card:hover{background:#171717}
-.thumb{height:78px;border-radius:10px;background:#1e1e1e center/50px no-repeat}
-.title{font-size:12px;margin-top:6px}
-.tag{font-size:10px;margin-top:3px;display:inline-block;padding:2px 8px;border-radius:10px}
-.live{background:#22c55e;color:#022}
-.premium{background:#fbbf24;color:#2c1a00}
-
-/* NAV */
-nav{position:sticky;bottom:0;background:#0d0d0d;border-top:1px solid #1c1c1c;padding:10px 16px;display:flex;justify-content:space-between}
-nav button{flex:1;margin:0 4px;border:0;border-radius:12px;padding:10px;background:#151515;color:#fff;cursor:pointer}
-nav button.active{background:#22c55e;color:#021;font-weight:700}
-
-/* MODAL */
-.modal-bg{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center}
-.modal{background:#0f0f0f;border-radius:14px;padding:18px;width:92%;max-width:350px}
-.modal h3{margin-bottom:6px}
-.modal input{width:100%;padding:10px;border:1px solid #333;border-radius:10px;background:#0a0a0a;color:#fff}
-.modal button{margin-top:10px;width:100%;padding:10px;border-radius:10px;border:0;background:#22c55e;color:#012;font-weight:700;cursor:pointer}
-.back-btn{margin-bottom:10px;border:0;background:#151515;color:#fff;padding:8px 12px;border-radius:10px;cursor:pointer}
+body{margin:0;background:#0b0f16;color:white;font-family:Arial;}
+.header{text-align:center;padding:18px;font-size:24px;font-weight:bold}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:18px}
+.card{background:#111726;border-radius:18px;padding:18px;text-align:center;box-shadow:0 10px 25px rgba(0,0,0,.6);cursor:pointer;transition:.2s}
+.card:hover{transform:scale(1.05)}
+.card img{width:70px;margin-bottom:12px}
+.card span{font-weight:600;font-size:16px}
+.section{display:none;padding:18px}
+.section h2{margin-top:0;text-align:center}
+.item{background:#131b2e;padding:12px;border-radius:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.item button{background:#2d8cff;border:0;padding:8px 14px;border-radius:10px;color:white;cursor:pointer}
+.back{margin-bottom:12px;cursor:pointer;color:#9fb6ff}
+video,iframe{width:100%;max-height:380px;border-radius:16px;background:black}
+input{width:100%;padding:8px;border-radius:10px;border:0;margin-bottom:10px}
+button.playBtn{width:100%;padding:10px;border-radius:12px;border:0;background:#2d8cff;color:white;cursor:pointer;font-size:15px}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<script>
+const PREMIUM_CODE = "061008";
+
+function openSection(id){document.querySelectorAll('.section').forEach(s=>s.style.display='none');document.querySelector('#home').style.display='none';document.querySelector('#'+id).style.display='block';}
+function backHome(){document.querySelectorAll('.section').forEach(s=>s.style.display='none');document.querySelector('#home').style.display='grid';}
+function playVideo(url){
+  const player=document.getElementById("player");
+  const frame=document.getElementById("yt");
+  // YouTube
+  if(url.includes("youtube") || url.includes("youtu.be")){
+    const id=url.split("v=")[1]||url.split("/").pop();
+    frame.src="https://www.youtube.com/embed/"+id+"?controls=1&modestbranding=1&rel=0&showinfo=0";
+    frame.style.display="block"; player.style.display="none"; return;
+  }
+  // m3u8 / mp4
+  frame.style.display="none"; player.style.display="block";
+  if(url.endsWith(".m3u8") && Hls.isSupported()){
+    const hls=new Hls(); hls.loadSource(url); hls.attachMedia(player);
+  } else { player.src=url; }
+}
+function checkPremium(){
+  const code=prompt("دخل الكود باش تدخل PREMIUM:");
+  if(code===PREMIUM_CODE){openSection('premium');}else{alert("الكود غير صحيح");}
+}
+</script>
 </head>
 <body>
 
-<header>
-  <h1>IPTV WAEL</h1>
-  <div class="badge-app">IBO Player style</div>
-</header>
+<div class="header">WAEL IPTV</div>
 
-<!-- HOME -->
-<div id="home" class="page active">
-  <div class="home-grid">
-    <div class="big-card" onclick="showPage('sports')">
-      <div class="icon">⚽</div>
-      <div class="label">Sports</div>
-      <div class="count">12 channels</div>
-    </div>
-    <div class="big-card" onclick="showPage('news')">
-      <div class="icon">📰</div>
-      <div class="label">News</div>
-      <div class="count">14 channels</div>
-    </div>
-    <div class="big-card" onclick="showPage('films')">
-      <div class="icon">🎬</div>
-      <div class="label">Films</div>
-      <div class="count">16 channels</div>
-    </div>
-    <div class="big-card" onclick="showPage('docs')">
-      <div class="icon">📺</div>
-      <div class="label">Documentaries</div>
-      <div class="count">12 channels</div>
-    </div>
-    <div class="big-card" onclick="showPage('premium')">
-      <div class="icon">⭐</div>
-      <div class="label">Premium</div>
-      <div class="count">Code: 061008</div>
-    </div>
-  </div>
+<!-- DASHBOARD HOME -->
+<div class="grid" id="home">
+  <div class="card" onclick="openSection('films')"><img src="films-logo.png"><span>FILMS (16)</span></div>
+  <div class="card" onclick="openSection('sports')"><img src="sports-logo.png"><span>SPORT (12)</span></div>
+  <div class="card" onclick="openSection('news')"><img src="news-logo.png"><span>NEWS (14)</span></div>
+  <div class="card" onclick="openSection('document')"><img src="doc-logo.png"><span>DOCUMENT (12)</span></div>
+  <div class="card" onclick="openSection('radio')"><img src="radio-logo.png"><span>IDA3A (15)</span></div>
+  <div class="card" onclick="openSection('live')"><img src="live-logo.png"><span>LIVE TV</span></div>
+  <div class="card" onclick="checkPremium()"><img src="premium-logo.png"><span>PREMIUM (15)</span></div>
 </div>
 
-<!-- SPORTS PAGE -->
-<div id="sports" class="page">
-  <button class="back-btn" onclick="showPage('home')">⬅ Home</button>
-  <div class="player"><iframe id="player-sports"></iframe></div>
-  <div class="section-title">Sports (12)</div>
-  <div class="grid" id="list-sports"></div>
+<!-- LIVE -->
+<div class="section" id="live">
+  <div class="back" onclick="backHome()">← رجوع</div>
+  <h2>LIVE TV</h2>
+  <video id="player" controls></video>
+  <iframe id="yt" style="display:none" frameborder="0" allowfullscreen></iframe>
+
+  <!-- أدخل القنوات هنا -->
+  <div class="item"><div>🔴 قناة 1</div><button onclick="playVideo('LINK_HNA_1.m3u8')">تشغيل</button></div>
+  <div class="item"><div>🔴 قناة 2</div><button onclick="playVideo('LINK_HNA_2.m3u8')">تشغيل</button></div>
 </div>
 
-<!-- NEWS PAGE -->
-<div id="news" class="page">
-  <button class="back-btn" onclick="showPage('home')">⬅ Home</button>
-  <div class="player"><iframe id="player-news"></iframe></div>
-  <div class="section-title">News (14)</div>
-  <div class="grid" id="list-news"></div>
+<!-- FILMS -->
+<div class="section" id="films">
+  <div class="back" onclick="backHome()">← رجوع</div>
+  <h2>FILMS</h2>
+  <div class="item"><div>🎬 Film 1</div><button onclick="playVideo('LINK_FILM_1.m3u8')">مشاهدة</button></div>
 </div>
 
-<!-- FILMS PAGE -->
-<div id="films" class="page">
-  <button class="back-btn" onclick="showPage('home')">⬅ Home</button>
-  <div class="player"><iframe id="player-films"></iframe></div>
-  <div class="section-title">Films (16)</div>
-  <div class="grid" id="list-films"></div>
+<!-- SPORTS -->
+<div class="section" id="sports">
+  <div class="back" onclick="backHome()">← رجوع</div>
+  <h2>SPORT</h2>
+  <div class="item"><div>⚽ قناة رياضية</div><button onclick="playVideo('LINK_SPORT_1.m3u8')">تشغيل</button></div>
 </div>
 
-<!-- DOCS PAGE -->
-<div id="docs" class="page">
-  <button class="back-btn" onclick="showPage('home')">⬅ Home</button>
-  <div class="player"><iframe id="player-docs"></iframe></div>
-  <div class="section-title">Documentaries (12)</div>
-  <div class="grid" id="list-docs"></div>
+<!-- NEWS -->
+<div class="section" id="news">
+  <div class="back" onclick="backHome()">← رجوع</div>
+  <h2>NEWS</h2>
+  <div class="item"><div>📰 قناة أخبار</div><button onclick="playVideo('LINK_NEWS_1.m3u8')">تشغيل</button></div>
 </div>
 
-<!-- PREMIUM PAGE -->
-<div id="premium" class="page">
-  <button class="back-btn" onclick="showPage('home')">⬅ Home</button>
-  <div class="player"><iframe id="player-premium"></iframe></div>
-  <div class="section-title">Premium (15) — Code required</div>
-  <div class="grid" id="list-premium"></div>
+<!-- DOCUMENT -->
+<div class="section" id="document">
+  <div class="back" onclick="backHome()">← رجوع</div>
+  <h2>DOCUMENT</h2>
+  <div class="item"><div>📚 Documentary 1</div><button onclick="playVideo('LINK_DOC_1.m3u8')">مشاهدة</button></div>
 </div>
 
-<!-- MODAL -->
-<div class="modal-bg" id="modal">
-  <div class="modal">
-    <h3>Enter Premium Code</h3>
-    <input id="code" type="password" placeholder="••••••">
-    <button onclick="unlock()">Confirm</button>
-  </div>
+<!-- RADIO -->
+<div class="section" id="radio">
+  <div class="back" onclick="backHome()">← رجوع</div>
+  <h2>IDA3A</h2>
+  <audio controls src="LINK_RADIO_1.mp3" style="width:100%"></audio>
 </div>
 
-<script>
-const CONFIG = {
-  // 👉 CHANGE LINKS HERE (YouTube embed links only)
+<!-- PREMIUM -->
+<div class="section" id="premium">
+  <div class="back" onclick="backHome()">← رجوع</div>
+  <h2>PREMIUM</h2>
+  <div class="item"><div>💎 Premium 1</div><button onclick="playVideo('LINK_PREMIUM_1.m3u8')">تشغيل</button></div>
+  <div class="item"><div>💎 Premium 2</div><button onclick="playVideo('LINK_PREMIUM_2.m3u8')">تشغيل</button></div>
+  <div class="item"><div>💎 Premium 3</div><button onclick="playVideo('LINK_PREMIUM_3.m3u8')">تشغيل</button></div>
+</div>
 
-  sports: [
-    // SPORTS (12)
-    "https://www.youtube.com/embed/VIDEO_SPORT_1",
-    "https://www.youtube.com/embed/VIDEO_SPORT_2",
-    "https://www.youtube.com/embed/VIDEO_SPORT_3",
-    "https://www.youtube.com/embed/VIDEO_SPORT_4",
-    "https://www.youtube.com/embed/VIDEO_SPORT_5",
-    "https://www.youtube.com/embed/VIDEO_SPORT_6",
-    "https://www.youtube.com/embed/VIDEO_SPORT_7",
-    "https://www.youtube.com/embed/VIDEO_SPORT_8",
-    "https://www.youtube.com/embed/VIDEO_SPORT_9",
-    "https://www.youtube.com/embed/VIDEO_SPORT_10",
-    "https://www.youtube.com/embed/VIDEO_SPORT_11",
-    "https://www.youtube.com/embed/VIDEO_SPORT_12",
-  ],
-
-  news: [
-    // NEWS (14)
-    "https://www.youtube.com/embed/VIDEO_NEWS_1",
-    "https://www.youtube.com/embed/VIDEO_NEWS_2",
-    "https://www.youtube.com/embed/VIDEO_NEWS_3",
-    "https://www.youtube.com/embed/VIDEO_NEWS_4",
-    "https://www.youtube.com/embed/VIDEO_NEWS_5",
-    "https://www.youtube.com/embed/VIDEO_NEWS_6",
-    "https://www.youtube.com/embed/VIDEO_NEWS_7",
-    "https://www.youtube.com/embed/VIDEO_NEWS_8",
-    "https://www.youtube.com/embed/VIDEO_NEWS_9",
-    "https://www.youtube.com/embed/VIDEO_NEWS_10",
-    "https://www.youtube.com/embed/VIDEO_NEWS_11",
-    "https://www.youtube.com/embed/VIDEO_NEWS_12",
-    "https://www.youtube.com/embed/VIDEO_NEWS_13",
-    "https://www.youtube.com/embed/VIDEO_NEWS_14",
-  ],
-
-  films: [
-    // FILMS (16)
-    "https://www.youtube.com/embed/FILM_1",
-    "https://www.youtube.com/embed/FILM_2",
-    "https://www.youtube.com/embed/FILM_3",
-    "https://www.youtube.com/embed/FILM_4",
-    "https://www.youtube.com/embed/FILM_5",
-    "https://www.youtube.com/embed/FILM_6",
-    "https://www.youtube.com/embed/FILM_7",
-    "https://www.youtube.com/embed/FILM_8",
-    "https://www.youtube.com/embed/FILM_9",
-    "https://www.youtube.com/embed/FILM_10",
-    "https://www.youtube.com/embed/FILM_11",
-    "https://www.youtube.com/embed/FILM_12",
-    "https://www.youtube.com/embed/FILM_13",
-    "https://www.youtube.com/embed/FILM_14",
-    "https://www.youtube.com/embed/FILM_15",
-    "https://www.youtube.com/embed/FILM_16",
-  ],
-
-  docs: [
-    // DOCUMENTARIES (12)
-    "https://www.youtube.com/embed/DOC_1",
-    "https://www.youtube.com/embed/DOC_2",
-    "https://www.youtube.com/embed/DOC_3",
-    "https://www.youtube.com/embed/DOC_4",
-    "https://www.youtube.com/embed/DOC_5",
-    "https://www.youtube.com/embed/DOC_6",
-    "https://www.youtube.com/embed/DOC_7",
-    "https://www.youtube.com/embed/DOC_8",
-    "https://www.youtube.com/embed/DOC_9",
-    "https://www.youtube.com/embed/DOC_10",
-    "https://www.youtube.com/embed/DOC_11",
-    "https://www.youtube.com/embed/DOC_12",
-  ],
-
-  premium: [
-    // PREMIUM (15)
-    "https://www.youtube.com/embed/PREM_1",
-    "https://www.youtube.com/embed/PREM_2",
-    "https://www.youtube.com/embed/PREM_3",
-    "https://www.youtube.com/embed/PREM_4",
-    "https://www.youtube.com/embed/PREM_5",
-    "https://www.youtube.com/embed/PREM_6",
-    "https://www.youtube.com/embed/PREM_7",
-    "https://www.youtube.com/embed/PREM_8",
-    "https://www.youtube.com/embed/PREM_9",
-    "https://www.youtube.com/embed/PREM_10",
-    "https://www.youtube.com/embed/PREM_11",
-    "https://www.youtube.com/embed/PREM_12",
-    "https://www.youtube.com/embed/PREM_13",
-    "https://www.youtube.com/embed/PREM_14",
-    "https://www.youtube.com/embed/PREM_15",
-  ],
-
-  premiumCode: "061008"
-};
-
-function showPage(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
-function render(list, wrapId, playerId, locked=false){
-  const box = document.getElementById(wrapId);
-  box.innerHTML = '';
-  list.forEach((url,i)=>{
-    const c = document.createElement('div');
-    c.className='card';
-    c.innerHTML = `
-      <div class='thumb'></div>
-      <div class='title'>${wrapId.toUpperCase()} ${i+1}</div>
-      <span class='tag ${locked?'premium':'live'}'>${locked?'PREMIUM':'LIVE'}</span>`;
-    c.onclick = ()=> locked ? askPremium(playerId,url) : play(playerId,url);
-    box.appendChild(c);
-  });
-  if(list[0]) play(playerId,list[0]);
-}
-
-function play(playerId,url){
-  document.getElementById(playerId).src=url;
-}
-
-let wantedUrl = null;
-function askPremium(playerId,url){
-  wantedUrl = {playerId,url};
-  document.getElementById('modal').style.display='flex';
-}
-function unlock(){
-  const code = document.getElementById('code').value;
-  if(code===CONFIG.premiumCode && wantedUrl){
-    document.getElementById('modal').style.display='none';
-    play(wantedUrl.playerId,wantedUrl.url);
-  }
-}
-
-render(CONFIG.sports,'list-sports','player-sports');
-render(CONFIG.news,'list-news','player-news');
-render(CONFIG.films,'list-films','player-films');
-render(CONFIG.docs,'list-docs','player-docs');
-render(CONFIG.premium,'list-premium','player-premium',true);
-</script>
 </body>
 </html>
