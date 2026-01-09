@@ -7,19 +7,62 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
-body{background:#010101;color:#fff}
-header{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #222;}
-.badge-app{font-size:11px;color:#aaa}
-.home-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:22px;justify-items:center;margin:25px 16px}
-.big-card{background:#111;border:1px solid #222;border-radius:20px;padding:22px;cursor:pointer;min-height:160px;display:flex;flex-direction:column;justify-content:center;align-items:center;transition:.3s}
+
+/* BACKGROUND FULL ANIMATION RED + CAF LOGO */
+body{
+  background:#b71c1c;
+  color:#fff;
+  overflow-x:hidden;
+  position:relative;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background: url('https://i.ibb.co/0r5jz7f/CAF-2025-Logo.png') center center/150px no-repeat;
+  opacity:0.1;
+  animation: moveBg 20s linear infinite;
+  z-index:0;
+}
+
+@keyframes moveBg{
+  0%{transform: translateX(0) translateY(0) rotate(0deg);}
+  25%{transform: translateX(50px) translateY(30px) rotate(10deg);}
+  50%{transform: translateX(-50px) translateY(-30px) rotate(-10deg);}
+  75%{transform: translateX(30px) translateY(20px) rotate(5deg);}
+  100%{transform: translateX(0) translateY(0) rotate(0deg);}
+}
+
+/* HEADER */
+header{
+  background:rgba(255,0,0,0.8);
+  padding:16px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid #222;
+  position:relative;
+  z-index:1;
+}
+header h1{font-size:22px;font-weight:700;letter-spacing:1px}
+.badge-app{font-size:11px;color:#fff}
+
+/* GRID & CARDS */
+.home-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:22px;justify-items:center;margin:25px 16px;position:relative;z-index:1}
+.big-card{background:#111;border:1px solid #222;border-radius:20px;padding:22px;cursor:pointer;min-height:160px;display:flex;flex-direction:column;justify-content:center;align-items:center;transition:.3s;position:relative;z-index:1}
 .big-card:hover{background:#1a1a1a;transform:scale(1.06)}
 .big-card .icon{font-size:50px;margin-bottom:14px}
 .big-card .label{font-size:16px;font-weight:700;margin-bottom:6px;text-align:center}
 .big-card .count{font-size:12px;opacity:.6;text-align:center}
-.player{background:#000;border-radius:18px;padding:10px;margin-bottom:14px}
+
+/* PLAYER */
+.player{background:#000;border-radius:18px;padding:10px;margin-bottom:14px;position:relative;z-index:1}
 iframe{border:0;border-radius:12px;width:100%;height:380px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:14px;margin-top:14px}
-.card{background:#111;border:1px solid #222;border-radius:14px;padding:10px;cursor:pointer;transition:.2s;text-align:center;overflow:hidden;position:relative}
+
+/* GRID SMALL CARDS */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:14px;margin-top:14px;position:relative;z-index:1}
+.card{background:#111;border:1px solid #222;border-radius:14px;padding:10px;cursor:pointer;transition:.2s;text-align:center;overflow:hidden;position:relative;z-index:1}
 .card:hover{background:#1a1a1a;transform:scale(1.03)}
 .thumb{height:90px;border-radius:10px;background:#1e1e1e center/contain no-repeat;margin-bottom:8px}
 .title{font-size:12px;font-weight:600}
@@ -28,8 +71,10 @@ iframe{border:0;border-radius:12px;width:100%;height:380px}
 .premium{background:#fbbf24;color:#2c1a00}
 .back-btn{margin:10px 16px;border:0;background:#1a1a1a;color:#fff;padding:8px 12px;border-radius:12px;cursor:pointer;transition:.2s}
 .back-btn:hover{background:#22c55e;color:#022}
+
+/* MODAL */
 .modal-bg{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center;z-index:999}
-.modal{background:#111;border-radius:14px;padding:20px;width:92%;max-width:350px}
+.modal{background:#111;border-radius:14px;padding:20px;width:92%;max-width:350px;position:relative;z-index:1000}
 .modal h3{margin-bottom:12px;font-weight:600}
 .modal input{width:100%;padding:12px;border:1px solid #333;border-radius:10px;background:#0a0a0a;color:#fff;margin-bottom:10px}
 .modal button{width:100%;padding:12px;border-radius:10px;border:0;background:#22c55e;color:#022;font-weight:700;cursor:pointer;transition:.2s}
@@ -38,9 +83,9 @@ iframe{border:0;border-radius:12px;width:100%;height:380px}
 </head>
 <body>
 
-<header style="background:#c8102e url('https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/CAF_logo.svg/1200px-CAF_logo.svg.png') no-repeat left center / 50px auto;">
-  <h1 style="margin-left:60px;">WAELVESION</h1>
-  <div class="badge-app">CAF 2025 MOROCCO — WAELVESION NEW UPDATE</div>
+<header>
+  <h1>WAELVESION</h1>
+  <div class="badge-app">WAELVESION NEW UPDATE</div>
 </header>
 
 <div id="home" class="page active">
@@ -64,128 +109,78 @@ iframe{border:0;border-radius:12px;width:100%;height:380px}
 <script>
 const CONFIG = {
   sections:[
-    {
-      name:'Sports',
-      icon:'⚽',
-      premium:false,
-      channels:[
-        {title:'WAELVISION SPORT AFCON', url:'https://www.youtube.com/embed/5WjJDN9zNFQ?modestbranding=1&controls=0&rel=0&showinfo=0'},
-        {title:'WAELVISION SPORT AFCON 2', url:'https://www.youtube.com/embed/5WjJDN9zNFQ?modestbranding=1&controls=0&rel=0&showinfo=0'},
-        {title:'WAELVISION SPORT AFCON 3', url:'https://www.youtube.com/embed/5WjJDN9zNFQ?modestbranding=1&controls=0&rel=0&showinfo=0'},
-        {title:'WAELVESION SPORT CAF 4', url:'https://www.youtube.com/embed/l67Ju2W6Euk?modestbranding=1&controls=0&rel=0&showinfo=0'},
-        {title:'WAELVISION SPORT CAF 5', url:'https://www.youtube.com/embed/l67Ju2W6Euk?modestbranding=1&controls=0&rel=0&showinfo=0'},
-        {title:'WAELVISION SPORT CAF 6', url:'https://www.youtube.com/embed/l67Ju2W6Euk?modestbranding=1&controls=0&rel=0&showinfo=0'},
-        {title:'WAELVISION SPORT CAF 7', url:'https://www.youtube.com/embed/l67Ju2W6Euk?modestbranding=1&controls=0&rel=0&showinfo=0'},
-        {title:'WAELVISION SPORT CAF 8', url:'https://www.youtube.com/embed/l67Ju2W6Euk?modestbranding=1&controls=0&rel=0&showinfo=0'},
-        {title:'WAELVISION SPORT CAF 9', url:'https://www.youtube.com/embed/l67Ju2W6Euk?modestbranding=1&controls=0&rel=0&showinfo=0'},
-        {title:'WAELVISION SPORT CAF 10', url:'https://www.youtube.com/embed/l67Ju2W6Euk?modestbranding=1&controls=0&rel=0&showinfo=0'},
-        {title:'WAELVISION SPORT CAF 11', url:'https://www.youtube.com/embed/l67Ju2W6Euk?modestbranding=1&controls=0&rel=0&showinfo=0'},
-        {title:'WAELVISION SPORT CAF 12', url:'https://www.youtube.com/embed/l67Ju2W6Euk?modestbranding=1&controls=0&rel=0&showinfo=0'},
-        {title:'WAELVISION SPORT CAF 13', url:'https://www.youtube.com/embed/l67Ju2W6Euk?modestbranding=1&controls=0&rel=0&showinfo=0'},
-        {title:'WAELVISION SPORT CAF 14', url:'https://www.youtube.com/embed/l67Ju2W6Euk?modestbranding=1&controls=0&rel=0&showinfo=0'},
-        {title:'WAELVISION SPORT CAF 15', url:'https://www.youtube.com/embed/l67Ju2W6Euk?modestbranding=1&controls=0&rel=0&showinfo=0'}
-      ]
-    },
-    {
-      name:'News',
-      icon:'📰',
-      premium:false,
-      channels:[
-        {title:'WAELVISION NEWS EN', url:'https://www.youtube.com/embed/sfnN2qz90bo?modestbranding=1&controls=0&rel=0&showinfo=0'},
-        {title:'WAELVISION NEWS EN 2', url:'https://www.youtube.com/embed/sfnN2qz90bo?modestbranding=1&controls=0&rel=0&showinfo=0'},
-        {title:'3 - News 3', url:'PUT_LINK_HERE_3'},
-        {title:'4 - News 4', url:'PUT_LINK_HERE_4'},
-        {title:'5 - News 5', url:'PUT_LINK_HERE_5'},
-        {title:'6 - News 6', url:'PUT_LINK_HERE_6'},
-        {title:'7 - News 7', url:'PUT_LINK_HERE_7'},
-        {title:'8 - News 8', url:'PUT_LINK_HERE_8'},
-        {title:'9 - News 9', url:'PUT_LINK_HERE_9'},
-        {title:'10 - News 10', url:'PUT_LINK_HERE_10'},
-        {title:'11 - News 11', url:'PUT_LINK_HERE_11'},
-        {title:'12 - News 12', url:'PUT_LINK_HERE_12'},
-        {title:'13 - News 13', url:'PUT_LINK_HERE_13'},
-        {title:'14 - News 14', url:'PUT_LINK_HERE_14'},
-        {title:'15 - News 15', url:'PUT_LINK_HERE_15'}
-      ]
-    },
-    {
-      name:'Films',
-      icon:'🎬',
-      premium:false,
-      channels:[
-        {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/elZGIW1hNHc?autoplay=1&modestbranding=1&controls=0&rel=0'},
-        {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/WQ4fUj7SzEs?autoplay=1&modestbranding=1&controls=0&rel=0'},
-        {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/jfHL61yMCis?autoplay=1&modestbranding=1&controls=0&rel=0'},
-        {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/robJ-60fXjY?autoplay=1&modestbranding=1&controls=0&rel=0'},
-        {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/6R2px1IgqmY?autoplay=1&modestbranding=1&controls=0&rel=0'},
-        {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/SsD-_oykv30?autoplay=1&modestbranding=1&controls=0&rel=0'},
-        {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/videoseries?list=PL9kKQ7xjE8HNNwalJgPMiFv0aNR75GU9N&autoplay=1&modestbranding=1&controls=0&rel=0'},
-        {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/videoseries?list=PL4zi6EhdHe3FPic94M_GvjpB_fSkBUnaH&autoplay=1&modestbranding=1&controls=0&rel=0'},
-        {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/videoseries?list=PLfRCZ3PuccvBqBum4D3g0FTNOr7Z4vzP2&autoplay=1&modestbranding=1&controls=0&rel=0'},
-        {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/videoseries?list=PLfRCZ3PuccvBQv71hWi334-zRJekjSlCq&autoplay=1&modestbranding=1&controls=0&rel=0'},
-        {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/2lJZPT6OljI?autoplay=1&modestbranding=1&controls=0&rel=0'},
-        {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/4Quc8KIECAs?autoplay=1&modestbranding=1&controls=0&rel=0'},
-        {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/-f809A8E820?autoplay=1&modestbranding=1&controls=0&rel=0'},
-        {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/YsWzugAnsBw?autoplay=1&modestbranding=1&controls=0&rel=0'},
-        {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/M705-UHHMuk?autoplay=1&modestbranding=1&controls=0&rel=0'}
-      ]
-    },
-    {
-      name:'Documentaries',
-      icon:'📺',
-      premium:false,
-      channels:[
-        {title:'1 - Doc 1', url:'PUT_LINK_HERE_1'},
-        {title:'2 - Doc 2', url:'PUT_LINK_HERE_2'},
-        {title:'3 - Doc 3', url:'PUT_LINK_HERE_3'},
-        {title:'4 - Doc 4', url:'PUT_LINK_HERE_4'},
-        {title:'5 - Doc 5', url:'PUT_LINK_HERE_5'},
-        {title:'6 - Doc 6', url:'PUT_LINK_HERE_6'},
-        {title:'7 - Doc 7', url:'PUT_LINK_HERE_7'},
-        {title:'8 - Doc 8', url:'PUT_LINK_HERE_8'},
-        {title:'9 - Doc 9', url:'PUT_LINK_HERE_9'},
-        {title:'10 - Doc 10', url:'PUT_LINK_HERE_10'},
-        {title:'11 - Doc 11', url:'PUT_LINK_HERE_11'},
-        {title:'12 - Doc 12', url:'PUT_LINK_HERE_12'},
-        {title:'13 - Doc 13', url:'PUT_LINK_HERE_13'},
-        {title:'14 - Doc 14', url:'PUT_LINK_HERE_14'},
-        {title:'15 - Doc 15', url:'PUT_LINK_HERE_15'}
-      ]
-    },
-    {
-      name:'Premium',
-      icon:'⭐',
-      premium:true,
-      channels:[
-        {title:'benIN SPORT 1', url:'PUT_LINK_HERE_1'},
-        {title:'benIN SPORT MAX', url:'PUT_LINK_HERE_2'},
-        {title:'benIN SPORT NEWS', url:'PUT_LINK_HERE_3'},
-        {title:'4 - Premium 4', url:'PUT_LINK_HERE_4'},
-        {title:'5 - Premium 5', url:'PUT_LINK_HERE_5'},
-        {title:'6 - Premium 6', url:'PUT_LINK_HERE_6'},
-        {title:'7 - Premium 7', url:'PUT_LINK_HERE_7'},
-        {title:'8 - Premium 8', url:'PUT_LINK_HERE_8'},
-        {title:'9 - Premium 9', url:'PUT_LINK_HERE_9'},
-        {title:'10 - Premium 10', url:'PUT_LINK_HERE_10'},
-        {title:'11 - Premium 11', url:'PUT_LINK_HERE_11'},
-        {title:'12 - Premium 12', url:'PUT_LINK_HERE_12'},
-        {title:'13 - Premium 13', url:'PUT_LINK_HERE_13'},
-        {title:'14 - Premium 14', url:'PUT_LINK_HERE_14'},
-        {title:'15 - Premium 15', url:'PUT_LINK_HERE_15'}
-      ]
-    }
+    {name:'Sports', icon:'⚽', premium:false, channels:[
+      {title:'WAELVISION SPORT AFCON', url:'https://www.youtube.com/embed/5WjJDN9zNFQ?modestbranding=1&controls=0&rel=0&showinfo=0'},
+      {title:'WAELVISION SPORT AFCON 2', url:'https://www.youtube.com/embed/5WjJDN9zNFQ?modestbranding=1&controls=0&rel=0&showinfo=0'},
+      {title:'WAELVISION SPORT AFCON 3', url:'https://www.youtube.com/embed/5WjJDN9zNFQ?modestbranding=1&controls=0&rel=0&showinfo=0'},
+      {title:'WAELVESION SPORT CAF 4', url:'https://www.youtube.com/embed/l67Ju2W6Euk?modestbranding=1&controls=0&rel=0&showinfo=0'},
+      {title:'WAELVISION SPORT CAF 5', url:'https://www.youtube.com/embed/l67Ju2W6Euk?modestbranding=1&controls=0&rel=0&showinfo=0'},
+      {title:'WAELVISION SPORT CAF 6', url:'https://www.youtube.com/embed/l67Ju2W6Euk?modestbranding=1&controls=0&rel=0&showinfo=0'},
+      {title:'WAELVISION SPORT CAF 7', url:'https://www.youtube.com/embed/l67Ju2W6Euk?modestbranding=1&controls=0&rel=0&showinfo=0'},
+      {title:'WAELVISION SPORT CAF 8', url:'https://www.youtube.com/embed/l67Ju2W6Euk?modestbranding=1&controls=0&rel=0&showinfo=0'},
+      {title:'WAELVISION SPORT CAF 9', url:'https://www.youtube.com/embed/l67Ju2W6Euk?modestbranding=1&controls=0&rel=0&showinfo=0'},
+      {title:'WAELVISION SPORT CAF 10', url:'https://www.youtube.com/embed/l67Ju2W6Euk?modestbranding=1&controls=0&rel=0&showinfo=0'},
+      {title:'WAELVISION SPORT CAF 11', url:'https://www.youtube.com/embed/l67Ju2W6Euk?modestbranding=1&controls=0&rel=0&showinfo=0'},
+      {title:'WAELVISION SPORT CAF 12', url:'https://www.youtube.com/embed/l67Ju2W6Euk?modestbranding=1&controls=0&rel=0&showinfo=0'},
+      {title:'WAELVISION SPORT CAF 13', url:'https://www.youtube.com/embed/l67Ju2W6Euk?modestbranding=1&controls=0&rel=0&showinfo=0'},
+      {title:'WAELVISION SPORT CAF 14', url:'https://www.youtube.com/embed/l67Ju2W6Euk?modestbranding=1&controls=0&rel=0&showinfo=0'},
+      {title:'WAELVISION SPORT CAF 15', url:'https://www.youtube.com/embed/l67Ju2W6Euk?modestbranding=1&controls=0&rel=0&showinfo=0'}
+    ]},
+    {name:'News', icon:'📰', premium:false, channels:[
+      {title:'WAELVISION NEWS EN', url:'https://www.youtube.com/embed/sfnN2qz90bo?modestbranding=1&controls=0&rel=0&showinfo=0'},
+      {title:'WAELVISION NEWS EN 2', url:'https://www.youtube.com/embed/sfnN2qz90bo?modestbranding=1&controls=0&rel=0&showinfo=0'},
+      {title:'3 - News 3', url:'PUT_LINK_HERE_3'}, {title:'4 - News 4', url:'PUT_LINK_HERE_4'},
+      {title:'5 - News 5', url:'PUT_LINK_HERE_5'}, {title:'6 - News 6', url:'PUT_LINK_HERE_6'},
+      {title:'7 - News 7', url:'PUT_LINK_HERE_7'}, {title:'8 - News 8', url:'PUT_LINK_HERE_8'},
+      {title:'9 - News 9', url:'PUT_LINK_HERE_9'}, {title:'10 - News 10', url:'PUT_LINK_HERE_10'},
+      {title:'11 - News 11', url:'PUT_LINK_HERE_11'}, {title:'12 - News 12', url:'PUT_LINK_HERE_12'},
+      {title:'13 - News 13', url:'PUT_LINK_HERE_13'}, {title:'14 - News 14', url:'PUT_LINK_HERE_14'},
+      {title:'15 - News 15', url:'PUT_LINK_HERE_15'}
+    ]},
+    {name:'Films', icon:'🎬', premium:false, channels:[
+      {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/elZGIW1hNHc?autoplay=1&modestbranding=1&controls=0&rel=0'},
+      {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/WQ4fUj7SzEs?autoplay=1&modestbranding=1&controls=0&rel=0'},
+      {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/jfHL61yMCis?autoplay=1&modestbranding=1&controls=0&rel=0'},
+      {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/robJ-60fXjY?autoplay=1&modestbranding=1&controls=0&rel=0'},
+      {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/6R2px1IgqmY?autoplay=1&modestbranding=1&controls=0&rel=0'},
+      {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/SsD-_oykv30?autoplay=1&modestbranding=1&controls=0&rel=0'},
+      {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/videoseries?list=PL9kKQ7xjE8HNNwalJgPMiFv0aNR75GU9N&autoplay=1&modestbranding=1&controls=0&rel=0'},
+      {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/videoseries?list=PL4zi6EhdHe3FPic94M_GvjpB_fSkBUnaH&autoplay=1&modestbranding=1&controls=0&rel=0'},
+      {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/videoseries?list=PLfRCZ3PuccvBqBum4D3g0FTNOr7Z4vzP2&autoplay=1&modestbranding=1&controls=0&rel=0'},
+      {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/videoseries?list=PLfRCZ3PuccvBQv71hWi334-zRJekjSlCq&autoplay=1&modestbranding=1&controls=0&rel=0'},
+      {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/2lJZPT6OljI?autoplay=1&modestbranding=1&controls=0&rel=0'},
+      {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/4Quc8KIECAs?autoplay=1&modestbranding=1&controls=0&rel=0'},
+      {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/-f809A8E820?autoplay=1&modestbranding=1&controls=0&rel=0'},
+      {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/YsWzugAnsBw?autoplay=1&modestbranding=1&controls=0&rel=0'},
+      {title:'WAELVESION FILMS', url:'https://www.youtube.com/embed/M705-UHHMuk?autoplay=1&modestbranding=1&controls=0&rel=0'}
+    ]},
+    {name:'Documentaries', icon:'📺', premium:false, channels:[
+      {title:'1 - Doc 1', url:'PUT_LINK_HERE_1'}, {title:'2 - Doc 2', url:'PUT_LINK_HERE_2'},
+      {title:'3 - Doc 3', url:'PUT_LINK_HERE_3'}, {title:'4 - Doc 4', url:'PUT_LINK_HERE_4'},
+      {title:'5 - Doc 5', url:'PUT_LINK_HERE_5'}, {title:'6 - Doc 6', url:'PUT_LINK_HERE_6'},
+      {title:'7 - Doc 7', url:'PUT_LINK_HERE_7'}, {title:'8 - Doc 8', url:'PUT_LINK_HERE_8'},
+      {title:'9 - Doc 9', url:'PUT_LINK_HERE_9'}, {title:'10 - Doc 10', url:'PUT_LINK_HERE_10'},
+      {title:'11 - Doc 11', url:'PUT_LINK_HERE_11'}, {title:'12 - Doc 12', url:'PUT_LINK_HERE_12'},
+      {title:'13 - Doc 13', url:'PUT_LINK_HERE_13'}, {title:'14 - Doc 14', url:'PUT_LINK_HERE_14'},
+      {title:'15 - Doc 15', url:'PUT_LINK_HERE_15'}
+    ]},
+    {name:'Premium', icon:'⭐', premium:true, channels:[
+      {title:'benIN SPORT 1', url:'PUT_LINK_HERE_1'}, {title:'benIN SPORT MAX', url:'PUT_LINK_HERE_2'},
+      {title:'benIN SPORT NEWS', url:'PUT_LINK_HERE_3'}, {title:'4 - Premium 4', url:'PUT_LINK_HERE_4'},
+      {title:'5 - Premium 5', url:'PUT_LINK_HERE_5'}, {title:'6 - Premium 6', url:'PUT_LINK_HERE_6'},
+      {title:'7 - Premium 7', url:'PUT_LINK_HERE_7'}, {title:'8 - Premium 8', url:'PUT_LINK_HERE_8'},
+      {title:'9 - Premium 9', url:'PUT_LINK_HERE_9'}, {title:'10 - Premium 10', url:'PUT_LINK_HERE_10'},
+      {title:'11 - Premium 11', url:'PUT_LINK_HERE_11'}, {title:'12 - Premium 12', url:'PUT_LINK_HERE_12'},
+      {title:'13 - Premium 13', url:'PUT_LINK_HERE_13'}, {title:'14 - Premium 14', url:'PUT_LINK_HERE_14'},
+      {title:'15 - Premium 15', url:'PUT_LINK_HERE_15'}
+    ]}
   ],
   premiumCode:'061008'
 };
 
 // باقي السكربت كما هو
-function showPage(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-function play(playerId,url){
-  document.getElementById(playerId).src = url+'?controls=1&modestbranding=1&rel=0&showinfo=0';
-}
+function showPage(id){ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+function play(playerId,url){ document.getElementById(playerId).src = url+'?controls=1&modestbranding=1&rel=0&showinfo=0'; }
 let wantedUrl=null;
 function askPremium(playerId,url){ wantedUrl={playerId,url}; document.getElementById('modal').style.display='flex'; }
 function unlock(){ 
